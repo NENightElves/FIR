@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIR", "FIR\FIR.csproj", "{389B08D7-0B66-487A-AC87-28359A7ABAC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIR_core", "FIR_core\FIR_core.csproj", "{655519F4-2542-42FE-B0B5-9EE0649E7EC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{389B08D7-0B66-487A-AC87-28359A7ABAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{389B08D7-0B66-487A-AC87-28359A7ABAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{389B08D7-0B66-487A-AC87-28359A7ABAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655519F4-2542-42FE-B0B5-9EE0649E7EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655519F4-2542-42FE-B0B5-9EE0649E7EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655519F4-2542-42FE-B0B5-9EE0649E7EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655519F4-2542-42FE-B0B5-9EE0649E7EC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
