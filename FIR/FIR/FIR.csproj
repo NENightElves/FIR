@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{389B08D7-0B66-487A-AC87-28359A7ABAC2}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>FIR</RootNamespace>
     <AssemblyName>FIR</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\solid_sircle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FIR_core\FIR_core.csproj">
+      <Project>{655519f4-2542-42fe-b0b5-9ee0649e7ec4}</Project>
+      <Name>FIR_core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

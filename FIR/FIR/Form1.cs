@@ -26,6 +26,7 @@ namespace FIR
         Color player_color = Color.Black;
 
 
+
         public Form1()
         {
             InitializeComponent();
@@ -70,7 +71,15 @@ namespace FIR
         //test
         private void button2_Click(object sender, EventArgs e)
         {
-
+            int i, j;
+            FIR_core xxx = new FIR_core();
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    xxx.board[i, j] = 0;
+                }
+            xxx.board[8, 8] = 1;
+            Console.Write(xxx.FindTarget());
         }
         //test
     }
