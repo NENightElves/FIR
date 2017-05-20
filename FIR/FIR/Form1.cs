@@ -21,7 +21,7 @@ namespace FIR
         const int BOARD_SIZE_X = 15;
         const int BOARD_SIZE_Y = 15;
 
-        Button[,] btn = new Button[16, 16];
+        Button[,] btn = new Button[20, 20];
         int mode = 2;
         Color player_color = Color.Black;
 
@@ -66,5 +66,12 @@ namespace FIR
             btn[8, 8].BackColor = Color.Black;
             mode = 1;
         }
+
+        //test
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+        //test
     }
 }
