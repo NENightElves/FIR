@@ -173,6 +173,10 @@ namespace FIR
             int aa=0;
             max = int.MinValue;
             boardimp_form();
+            
+            //test
+            print_boardimp();
+            //test
 
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
@@ -186,7 +190,7 @@ namespace FIR
         }
 
         //testFunction
-        public void print_boardimp()
+        void print_boardimp()
         {
             int i, j;
             for (i = 1; i <= 15; i++)
