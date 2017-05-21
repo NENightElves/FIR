@@ -151,7 +151,7 @@ namespace FIR
                     sum -= 2 * ROW_zero_in_1;
                     break;
             }
-            switch (num_zero_d_out)
+            switch (num_zero_out)
             {
                 case 1:
                     sum += 1 * ROW_zero_out_1;
