@@ -58,10 +58,10 @@ namespace FIR
                         y2 -= stepy;
                         num_zero_out++;
                     }
+                    i += stepx;
+                    j += stepy;
                     break;
                 }
-                i += stepx;
-                j += stepy;
             }
 
             i = xxx;j = yyy;
