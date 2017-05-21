@@ -20,9 +20,8 @@ namespace FIR
 
         public int[,] board = new int[20, 20];
         int[,] boardimp = new int[20, 20];
-        int[,] boardimp1 = new int[20, 20];
-        int[,] boardimp2 = new int[20, 20];
-        int importance;
+        //int[,] boardimp1 = new int[20, 20];
+        //int[,] boardimp2 = new int[20, 20];
         int num_you, num_me, num_zero_in, num_zero_d_out, num_zero_out;
 
         bool on_board(int x, int y)
@@ -43,7 +42,7 @@ namespace FIR
             int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
             bool f;
             initial_num();
-            board[i, j] = mode;
+            board[xxx, yyy] = mode;
 
             while (true)
             {
@@ -108,7 +107,7 @@ namespace FIR
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
-            board[i, j] = 0;
+            board[xxx, yyy] = 0;
         }
 
         public int imp_collect_calc(int mode, int x, int y, int stepx, int stepy)
@@ -165,7 +164,7 @@ namespace FIR
 
         public int imp(int x, int y, int mode)
         {
-            importance = 0;
+            int importance = 0;
             importance += imp_collect_calc(mode, x, y, 1, 1);
             importance += imp_collect_calc(mode, x, y, 1, 0);
             importance += imp_collect_calc(mode, x, y, 0, 1);
@@ -213,7 +212,7 @@ namespace FIR
             {
                 for (j = 1; j <= 15; j++)
                 {
-                    Console.Write("{0,-5}",boardimp[i, j]);
+                    Console.Write("{0,-5}", boardimp[i, j]);
                 }
                 Console.WriteLine();
             }
