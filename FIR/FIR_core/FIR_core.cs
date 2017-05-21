@@ -34,9 +34,10 @@ namespace FIR
             num_you = 0;
             num_me = 0;
             num_zero_in = 0;
+            num_zero_out = 0;
             num_zero_d_out = 0;
         }
-        void imp_collect_row(int mode, int i, int j, int stepx, int stepy)
+        public void imp_collect_row(int mode, int i, int j, int stepx, int stepy)
         {
             int xxx = i, yyy = j;
             int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -48,7 +49,7 @@ namespace FIR
             {
                 if (on_board(i, j))
                 {
-                    if (board[i, j] == mode) { x2 = i; y2 = j; }
+                    if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
                 if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
@@ -61,7 +62,8 @@ namespace FIR
                         i -= stepx;
                         j -= stepy;
                         num_zero_d_out++;
-                        if (f) num_zero_out++;
+                        if (f)
+                            num_zero_out++;
                     }
                     x2 = i;
                     y2 = j;
@@ -77,7 +79,7 @@ namespace FIR
             {
                 if (on_board(i, j))
                 {
-                    if (board[i, j] == mode) { x1 = i; y1 = j; }
+                    if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
                 if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
@@ -90,7 +92,8 @@ namespace FIR
                         i += stepx;
                         j += stepy;
                         num_zero_d_out++;
-                        if (f) num_zero_out++;
+                        if (f)
+                            num_zero_out++;
                     }
                     x1 = i;
                     y1 = j;
@@ -108,7 +111,7 @@ namespace FIR
             board[i, j] = 0;
         }
 
-        int imp_collect_calc(int mode, int x, int y, int stepx, int stepy)
+        public int imp_collect_calc(int mode, int x, int y, int stepx, int stepy)
         {
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
@@ -160,7 +163,7 @@ namespace FIR
             return sum;
         }
 
-        int imp(int x, int y, int mode)
+        public int imp(int x, int y, int mode)
         {
             importance = 0;
             importance += imp_collect_calc(mode, x, y, 1, 1);
@@ -211,7 +214,6 @@ namespace FIR
                 for (j = 1; j <= 15; j++)
                 {
                     Console.Write("{0,-5}",boardimp[i, j]);
-                    Console.Write(" ");
                 }
                 Console.WriteLine();
             }

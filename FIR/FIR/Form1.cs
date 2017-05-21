@@ -78,7 +78,7 @@ namespace FIR
                 {
                     xxx.board[i, j] = 0;
                 }
-            xxx.board[8, 8] = 1;
+            xxx.board[8, 8] = 2;
             Console.Write(xxx.FindTarget());
         }
         //test
