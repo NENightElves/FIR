@@ -55,9 +55,6 @@ namespace FIR
                 }
             this.Size = new Size(LEFT_MARGIN + RIGHT_MARGIN + BOARD_SIZE_X * BUTTON_SIZE_X, UP_MARGIN + DOWN_MARGIN + BOARD_SIZE_Y * BUTTON_SIZE_Y);
 
-            btn[1, 1].BackColor = Color.Black;
-            btn[1, 2].BackColor = Color.Gray;
-
 
         }
 

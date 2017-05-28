@@ -51,8 +51,9 @@ namespace FIR
                     if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
-                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
+                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j) || (num_zero_in > (5 - num_me)))
                 {
+                    if (num_zero_in > (5 - num_me)) num_zero_in = 0;
                     f = on_board(i, j);
                     i -= stepx;
                     j -= stepy;
@@ -73,6 +74,7 @@ namespace FIR
             }
 
             i = xxx; j = yyy;
+            num_me--;
 
             while (true)
             {
@@ -81,8 +83,9 @@ namespace FIR
                     if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
-                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
+                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j) || (num_zero_in > (5 - num_me)))
                 {
+                    if (num_zero_in > (5 - num_me)) num_zero_in = 0;
                     f = on_board(i, j);
                     i += stepx;
                     j += stepy;
@@ -103,7 +106,6 @@ namespace FIR
             }
 
             num_zero_in -= num_zero_d_out;
-            num_me--;
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
@@ -135,10 +137,10 @@ namespace FIR
             switch (num_you)
             {
                 case 1:
-                    sum -= ROW_you_1;
+                    sum += ROW_you_1;
                     break;
                 case 2:
-                    sum -= ROW_you_2;
+                    sum += ROW_you_2;
                     break;
             }
             switch (num_zero_in)
