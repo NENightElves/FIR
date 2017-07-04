@@ -22,13 +22,15 @@ namespace FIR
         int[,] boardimp = new int[20, 20];
         //int[,] boardimp1 = new int[20, 20];
         //int[,] boardimp2 = new int[20, 20];
-        int num_you, num_me, num_zero_in, num_zero_d_out, num_zero_out;
+        int num_you, num_me, num_zero_in, num_zero_out, num_zero_d_out;
 
         bool on_board(int x, int y)
+        ///判断点x,y是否在棋盘上
         {
             if (((x >= 1) && (x <= 15)) && ((y >= 1) && (y <= 15))) return true; else return false;
         }
         void initial_num()
+        ///初始化
         {
             num_you = 0;
             num_me = 0;
@@ -37,6 +39,7 @@ namespace FIR
             num_zero_d_out = 0;
         }
         public void imp_collect_row(int mode, int i, int j, int stepx, int stepy)
+        ///针对[i,j]格点尝试向stepx,stepy方向统计各变量的值,mode说明了此步是我方还是敌方
         {
             int xxx = i, yyy = j;
             int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -113,6 +116,7 @@ namespace FIR
         }
 
         public int imp_collect_calc(int mode, int x, int y, int stepx, int stepy)
+        ///针对统计的变量计算[x,y]权重，仅限于某个方向
         {
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
@@ -165,6 +169,7 @@ namespace FIR
         }
 
         public int imp(int x, int y, int mode)
+        ///计算总量权重
         {
             int importance = 0;
             importance += imp_collect_calc(mode, x, y, 1, 1);
@@ -175,6 +180,7 @@ namespace FIR
         }
 
         void boardimp_form()
+        ///对棋盘上所有格子生成权重
         {
             int i, j;
             for (i = 1; i <= 15; i++)
@@ -183,6 +189,7 @@ namespace FIR
         }
 
         public int FindTarget()
+        ///寻找下一个着棋位置
         {
             int i, j;
             int max;
@@ -210,11 +217,17 @@ namespace FIR
         void print_boardimp()
         {
             int i, j;
+            for (j = 0; j <= 15; j++)
+            {
+                Console.Write("[{0,-2}]  ", j);
+            }
+            Console.WriteLine();
             for (i = 1; i <= 15; i++)
             {
+                Console.Write("[{0,-2}]  ", i);
                 for (j = 1; j <= 15; j++)
                 {
-                    Console.Write("{0,-5}", boardimp[i, j]);
+                    Console.Write("{0,-6}", boardimp[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -223,6 +236,8 @@ namespace FIR
 
 
     }
+
+
 }
 
 

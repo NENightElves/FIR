@@ -18,18 +18,14 @@ namespace UnitTestProject1
                     xxx.board[i, j] = 0;
                 }
             xxx.board[8, 8] = 2;
-            Console.WriteLine(xxx.imp(1, 1, 1));
-            Console.WriteLine(xxx.imp(1, 1, 2));
-            //Console.WriteLine(xxx.imp(9, 7, 1));
-            //Console.WriteLine(xxx.imp(9, 7, 2));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 7, 7, 1, 1));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 7, 7, 1, 0));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 7, 7, 0, 1));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 7, 7, 1, -1));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 9, 7, 1, 1));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 9, 7, 1, 0));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 9, 7, 0, 1));
-            //Console.WriteLine(xxx.imp_collect_calc(1, 9, 7, 1, -1));
+            xxx.board[7, 8] = 2;
+            xxx.board[9, 8] = 2;
+            Console.WriteLine(xxx.imp(13, 12, 1));
+            Console.WriteLine(xxx.imp(13, 12, 2));
+            Console.WriteLine(xxx.imp_collect_calc(1, 13, 12, 1, 1));
+            Console.WriteLine(xxx.imp_collect_calc(1, 13, 12, 1, 0));
+            Console.WriteLine(xxx.imp_collect_calc(1, 13, 12, 0, 1));
+            Console.WriteLine(xxx.imp_collect_calc(1, 13, 12, 1, -1));
         }
     }
 }

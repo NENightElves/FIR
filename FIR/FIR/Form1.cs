@@ -43,8 +43,8 @@ namespace FIR
         private void Form1_Load(object sender, EventArgs e)
         {
             int i, j;
-            for (i = 1; i <= BOARD_SIZE_X; i++)
-                for (j = 1; j <= BOARD_SIZE_Y; j++)
+            for (i = 0; i <= BOARD_SIZE_X; i++)
+                for (j = 0; j <= BOARD_SIZE_Y; j++)
                 {
                     btn[i, j] = new Button();
                     btn[i, j].Size = new Size(BUTTON_SIZE_X, BUTTON_SIZE_Y);
@@ -52,6 +52,8 @@ namespace FIR
                     btn[i, j].BackColor = Color.White;
                     btn[i, j].Click += btn_event;
                     this.Controls.Add(btn[i, j]);
+                    if (i == 0) btn[i, j].Text = Convert.ToString(j%10);
+                    if (j == 0) btn[i, j].Text = Convert.ToString(i%10);
                 }
             this.Size = new Size(LEFT_MARGIN + RIGHT_MARGIN + BOARD_SIZE_X * BUTTON_SIZE_X, UP_MARGIN + DOWN_MARGIN + BOARD_SIZE_Y * BUTTON_SIZE_Y);
 
@@ -76,6 +78,8 @@ namespace FIR
                     xxx.board[i, j] = 0;
                 }
             xxx.board[8, 8] = 2;
+            xxx.board[7, 8] = 2;
+            xxx.board[9, 8] = 2;
             Console.Write(xxx.FindTarget());
         }
         //test
