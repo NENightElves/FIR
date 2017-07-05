@@ -20,20 +20,21 @@ namespace UnitTestProject1
                 }
             xxx.board[8, 8] = 2;
             xxx.board[7, 8] = 2;
-            xxx.board[9, 8] = 2;
+            xxx.board[9, 8] = 1;
+            
 
-            x = 8;
-            y = 7;
+            x = 5;
+            y = 8;
             //Console.WriteLine(xxx.imp(x, y, 1));
             //Console.WriteLine(xxx.imp(x, y, 2));
-            Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, 1));
-            Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, 0));
-            Console.WriteLine(xxx.imp_collect_calc(1, x, y, 0, 1));
-            Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, -1));
-            Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, 1));
+            //Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, 1));
+            //Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, 0));
+            //Console.WriteLine(xxx.imp_collect_calc(1, x, y, 0, 1));
+            //Console.WriteLine(xxx.imp_collect_calc(1, x, y, 1, -1));
+            //Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, 1));
             Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, 0));
-            Console.WriteLine(xxx.imp_collect_calc(2, x, y, 0, 1));
-            Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, -1));
+            //Console.WriteLine(xxx.imp_collect_calc(2, x, y, 0, 1));
+            //Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, -1));
         }
     }
 }

@@ -54,9 +54,8 @@ namespace FIR
                     if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
-                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j) || (num_zero_in > (5 - num_me)))
+                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
                 {
-                    if (num_zero_in > (5 - num_me)) num_zero_in = 0;
                     f = on_board(i, j);
                     i -= stepx;
                     j -= stepy;
@@ -89,9 +88,8 @@ namespace FIR
                     if (board[i, j] == mode) { num_me++; }
                     if (board[i, j] == 0) num_zero_in++;
                 }
-                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j) || (num_zero_in > (5 - num_me)))
+                if (((board[i, j] != mode) && (board[i, j] != 0)) || !on_board(i, j))
                 {
-                    if (num_zero_in > (5 - num_me)) num_zero_in = 0;
                     f = on_board(i, j);
                     i += stepx;
                     j += stepy;
@@ -114,7 +112,8 @@ namespace FIR
                 j -= stepy;
             }
 
-            if (num_zero_in != 0) num_zero_in -= num_zero_d_out;
+            num_zero_in -= num_zero_d_out;
+            if (num_zero_in > (5 - num_me)) num_zero_in = 0;
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
