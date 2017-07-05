@@ -16,7 +16,7 @@ namespace FIR
         const int ROW_you_1 = 5;
         const int ROW_you_2 = 10;
         const int ROW_zero_in_1 = 2;
-        const int ROW_zero_out_1 = 3;
+        const int ROW_zero_out_1 = 1;
 
         public int[,] board = new int[20, 20];
         int[,] boardimp = new int[20, 20];
@@ -66,7 +66,10 @@ namespace FIR
                         j -= stepy;
                         num_zero_d_out++;
                         if (f)
+                        {
                             num_zero_out++;
+                            f = false;
+                        }
                     }
                     x2 = i;
                     y2 = j;
@@ -98,7 +101,10 @@ namespace FIR
                         j += stepy;
                         num_zero_d_out++;
                         if (f)
+                        {
                             num_zero_out++;
+                            f = false;
+                        }
                     }
                     x1 = i;
                     y1 = j;
