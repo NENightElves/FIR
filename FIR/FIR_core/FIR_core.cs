@@ -10,8 +10,8 @@ namespace FIR
     {
         const int ROW_me_1 = 1;
         const int ROW_me_2 = 2;
-        const int ROW_me_3 = 5;
-        const int ROW_me_4 = 10;
+        const int ROW_me_3 = 10;
+        const int ROW_me_4 = 20;
         const int ROW_me_5 = 50000;
         const int ROW_you_1 = 5;
         const int ROW_you_2 = 10;
@@ -114,7 +114,7 @@ namespace FIR
                 j -= stepy;
             }
 
-            num_zero_in -= num_zero_d_out;
+            if (num_zero_in != 0) num_zero_in -= num_zero_d_out;
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
