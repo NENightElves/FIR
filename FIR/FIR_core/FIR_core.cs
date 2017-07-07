@@ -11,7 +11,7 @@ namespace FIR
         const int ROW_me_1 = 1;
         const int ROW_me_2 = 5;
         const int ROW_me_3 = 21;
-        const int ROW_me_4 = 105;
+        const int ROW_me_4 = 85;
         const int ROW_me_5 = 50000;
         //const int ROW_you_1 = 5;
         //const int ROW_you_2 = 21;
@@ -148,8 +148,8 @@ namespace FIR
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
             sum += ROW_me[num_me];
-            sum -= num_you * ROW_me[num_me-1];
-            sum -= num_zero_in * ROW_me[num_me-1];
+            sum -= num_you * ROW_me[num_me - 1] * 2;
+            sum -= num_zero_in * ROW_me[num_me - 1];
             //switch (num_you)
             //{
             //    case 1:
