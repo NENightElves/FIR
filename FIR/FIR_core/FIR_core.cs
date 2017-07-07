@@ -24,6 +24,20 @@ namespace FIR
         //int[,] boardimp2 = new int[20, 20];
         int num_you, num_me, num_zero_in, num_zero_out, num_zero_d_out;
 
+        public FIR_core()
+        {
+            int i,j;
+            for (i=1;i<=15;i++)
+            {
+                for (j=1;j<=15;j++)
+                {
+                    board[i, j] = 0;
+                    boardimp[i, j] = 0;
+                }
+            }
+            initial_num();
+        }
+
         bool on_board(int x, int y)
         ///判断点x,y是否在棋盘上
         {

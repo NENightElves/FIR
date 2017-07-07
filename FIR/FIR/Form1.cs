@@ -24,18 +24,52 @@ namespace FIR
         Button[,] btn = new Button[20, 20];
         int mode = 2;
         Color player_color = Color.Black;
-
-
-
+        int n = 0;
+        FIR_core[] step_record = new FIR_core[200];
+        
         public Form1()
         {
             InitializeComponent();
         }
 
+        //用于获取按钮与棋盘格点的对应坐标
+        public int GetX(int n)
+        {
+            return ((n - LEFT_MARGIN) / BUTTON_SIZE_X + 1);
+        }
+        public int GetY(int n)
+        {
+            return ((n - UP_MARGIN) / BUTTON_SIZE_Y + 1);
+        }
+        //用于获取按钮与棋盘格点的对应坐标
+
+        public void copy_data()
+        {
+            int i, j;
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    if (btn[i, j].BackColor == Color.White) step_record[n].board[i, j] = 0;
+                    if (btn[i, j].BackColor == Color.Black) step_record[n].board[i, j] = 2;
+                    if (btn[i, j].BackColor == Color.Gray) step_record[n].board[i, j] = 1;
+                }
+        }
+
         void btn_event(object sender, EventArgs e)
         {
+            int x, y;
             if ((sender as Button).BackColor == Color.White)
+            {
+                n++;
                 (sender as Button).BackColor = player_color;
+                copy_data();
+                x=step_record[n].FindTarget();
+                y = x % 100;
+                x = x / 100;
+                btn[x, y].BackColor = Color.Gray;
+                n++;
+                copy_data();
+            }
             else
                 return;
         }
@@ -43,6 +77,10 @@ namespace FIR
         private void Form1_Load(object sender, EventArgs e)
         {
             int i, j;
+            for (i=1;i<=199;i++)
+            {
+                step_record[i] = new FIR_core();
+            }
             for (i = 0; i <= BOARD_SIZE_X; i++)
                 for (j = 0; j <= BOARD_SIZE_Y; j++)
                 {
