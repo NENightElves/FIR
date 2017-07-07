@@ -9,13 +9,13 @@ namespace FIR
     public class FIR_core
     {
         const int ROW_me_1 = 1;
-        const int ROW_me_2 = 2;
-        const int ROW_me_3 = 10;
-        const int ROW_me_4 = 20;
+        const int ROW_me_2 = 8;
+        const int ROW_me_3 = 64;
+        const int ROW_me_4 = 512;
         const int ROW_me_5 = 50000;
-        const int ROW_you_1 = 5;
-        const int ROW_you_2 = 10;
-        const int ROW_zero_in_1 = 2;
+        const int ROW_you_1 = 8;
+        const int ROW_you_2 = 64;
+        const int ROW_zero_in_1 = 8;
         const int ROW_zero_out_1 = 1;
 
         public int[,] board = new int[20, 20];
@@ -23,18 +23,24 @@ namespace FIR
         //int[,] boardimp1 = new int[20, 20];
         //int[,] boardimp2 = new int[20, 20];
         int num_you, num_me, num_zero_in, num_zero_out, num_zero_d_out;
+        int[] ROW_me = new int[6];
 
         public FIR_core()
         {
-            int i,j;
-            for (i=1;i<=15;i++)
+            int i, j;
+            for (i = 1; i <= 15; i++)
             {
-                for (j=1;j<=15;j++)
+                for (j = 1; j <= 15; j++)
                 {
                     board[i, j] = 0;
                     boardimp[i, j] = 0;
                 }
             }
+            ROW_me[1] = ROW_me_1;
+            ROW_me[2] = ROW_me_2;
+            ROW_me[3] = ROW_me_3;
+            ROW_me[4] = ROW_me_4;
+            ROW_me[5] = ROW_me_5;
             initial_num();
         }
 
@@ -127,7 +133,7 @@ namespace FIR
             }
 
             num_zero_in -= num_zero_d_out;
-            if (num_zero_in > (5 - num_me)) num_zero_in = 0;
+            //if (num_zero_in > (5 - num_me)) num_zero_in = 0;
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
@@ -139,42 +145,27 @@ namespace FIR
         {
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
-            switch (num_me)
-            {
-                case 1:
-                    sum += ROW_me_1;
-                    break;
-                case 2:
-                    sum += ROW_me_2;
-                    break;
-                case 3:
-                    sum += ROW_me_3;
-                    break;
-                case 4:
-                    sum += ROW_me_4;
-                    break;
-                case 5:
-                    sum += ROW_me_5;
-                    break;
-            }
-            switch (num_you)
-            {
-                case 1:
-                    sum += ROW_you_1;
-                    break;
-                case 2:
-                    sum += ROW_you_2;
-                    break;
-            }
-            switch (num_zero_in)
-            {
-                case 1:
-                    sum -= 1 * ROW_zero_in_1;
-                    break;
-                case 2:
-                    sum -= 2 * ROW_zero_in_1;
-                    break;
-            }
+            sum += ROW_me[num_me];
+            sum -= num_you * ROW_me[num_me];
+            sum -= num_zero_in * ROW_me[num_me];
+            //switch (num_you)
+            //{
+            //    case 1:
+            //        sum -= ROW_you_1;
+            //        break;
+            //    case 2:
+            //        sum -= ROW_you_2;
+            //        break;
+            //}
+            //switch (num_zero_in)
+            //{
+            //    case 1:
+            //        sum -= 1 * ROW_me[num_me];
+            //        break;
+            //    case 2:
+            //        sum -= 2 * ROW_me[num_me];
+            //        break;
+            //}
             switch (num_zero_out)
             {
                 case 1:
@@ -184,6 +175,7 @@ namespace FIR
                     sum += 2 * ROW_zero_out_1;
                     break;
             }
+            if ((num_me == 5) && (num_zero_in == 0)) sum += ROW_me_5;
             return sum;
         }
 
@@ -204,7 +196,7 @@ namespace FIR
             int i, j;
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
-                    if (board[i, j] == 0) boardimp[i, j] = imp(i, j, 1) + imp(i, j, 2); else boardimp[i, j] = -1000;
+                    if (board[i, j] == 0) boardimp[i, j] = imp(i, j, 1) + imp(i, j, 2); else boardimp[i, j] = -999 - board[i, j];
         }
 
         public int FindTarget()
@@ -217,10 +209,6 @@ namespace FIR
             max = int.MinValue;
             boardimp_form();
 
-            //test
-            print_boardimp();
-            //test
-
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                     if (boardimp[i, j] > max) max = boardimp[i, j];
@@ -229,7 +217,18 @@ namespace FIR
                 for (j = 1; j <= 15; j++)
                     if (boardimp[i, j] == max) a[++aa] = i * 100 + j;
             Random ran = new Random();
-            return a[ran.Next(1, aa)];
+
+            max = ran.Next(1, aa);
+
+            //test
+            print_boardimp();
+            Console.Write(a[max]);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            //test
+
+            return a[max];
         }
 
         //testFunction
