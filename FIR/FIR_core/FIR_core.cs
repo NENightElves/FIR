@@ -9,14 +9,16 @@ namespace FIR
     public class FIR_core
     {
         const int ROW_me_1 = 1;
-        const int ROW_me_2 = 8;
-        const int ROW_me_3 = 64;
-        const int ROW_me_4 = 512;
+        const int ROW_me_2 = 5;
+        const int ROW_me_3 = 21;
+        const int ROW_me_4 = 105;
         const int ROW_me_5 = 50000;
-        const int ROW_you_1 = 8;
-        const int ROW_you_2 = 64;
-        const int ROW_zero_in_1 = 8;
-        const int ROW_zero_out_1 = 1;
+        //const int ROW_you_1 = 5;
+        //const int ROW_you_2 = 21;
+        //const int ROW_zero_in_1 = 5;
+        //const int ROW_zero_out_1 = 1;
+
+        //static int[,] totalimp = new int[20, 20];
 
         public int[,] board = new int[20, 20];
         int[,] boardimp = new int[20, 20];
@@ -146,8 +148,8 @@ namespace FIR
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
             sum += ROW_me[num_me];
-            sum -= num_you * ROW_me[num_me];
-            sum -= num_zero_in * ROW_me[num_me];
+            sum -= num_you * ROW_me[num_me-1];
+            sum -= num_zero_in * ROW_me[num_me-1];
             //switch (num_you)
             //{
             //    case 1:
@@ -166,15 +168,15 @@ namespace FIR
             //        sum -= 2 * ROW_me[num_me];
             //        break;
             //}
-            switch (num_zero_out)
-            {
-                case 1:
-                    sum += 1 * ROW_zero_out_1;
-                    break;
-                case 2:
-                    sum += 2 * ROW_zero_out_1;
-                    break;
-            }
+            //switch (num_zero_out)
+            //{
+            //    case 1:
+            //        sum += 1 * ROW_zero_out_1;
+            //        break;
+            //    case 2:
+            //        sum += 2 * ROW_zero_out_1;
+            //        break;
+            //}
             if ((num_me == 5) && (num_zero_in == 0)) sum += ROW_me_5;
             return sum;
         }
@@ -196,7 +198,7 @@ namespace FIR
             int i, j;
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
-                    if (board[i, j] == 0) boardimp[i, j] = imp(i, j, 1) + imp(i, j, 2); else boardimp[i, j] = -999 - board[i, j];
+                    if (board[i, j] == 0) boardimp[i, j] = imp(i, j, 1) + imp(i, j, 2); else boardimp[i, j] = -9999 - board[i, j];
         }
 
         public int FindTarget()
@@ -237,15 +239,15 @@ namespace FIR
             int i, j;
             for (j = 0; j <= 15; j++)
             {
-                Console.Write("[{0,-2}]  ", j);
+                Console.Write("[{0,-2}]   ", j);
             }
             Console.WriteLine();
             for (i = 1; i <= 15; i++)
             {
-                Console.Write("[{0,-2}]  ", i);
+                Console.Write("[{0,-2}]   ", i);
                 for (j = 1; j <= 15; j++)
                 {
-                    Console.Write("{0,-6}", boardimp[i, j]);
+                    Console.Write("{0,-7}", boardimp[i, j]);
                 }
                 Console.WriteLine();
             }

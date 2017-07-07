@@ -120,22 +120,28 @@ namespace FIR
                 {
                     xxx.board[i, j] = 0;
                 }
-            xxx.board[7, 6] = 1;
-            xxx.board[6, 7] = 1;
-            xxx.board[7, 8] = 1;
-            xxx.board[8, 8] = 1;
-            xxx.board[9, 10] = 1;
-            xxx.board[10, 7] = 1;
-
-            xxx.board[9, 7] = 2;
-            xxx.board[8, 7] = 2;
+            xxx.board[4, 6] = 1;
+            xxx.board[5, 7] = 1;
+            xxx.board[6, 7] = 2;
+            xxx.board[6, 8] = 1;
             xxx.board[7, 7] = 2;
-            xxx.board[9, 8] = 2;
-            xxx.board[9, 9] = 2;
-            xxx.board[8, 9] = 2;
-            xxx.board[10, 9] = 2;
-
+            xxx.board[7, 8] = 1;
+            xxx.board[7, 9] = 2;
+            xxx.board[8, 7] = 2;
+            xxx.board[8, 8] = 2;
             Console.Write(xxx.FindTarget());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int i, j;
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    //if (btn[i, j].BackColor == Color.White) textBox1.Text+="xxx.board[" + i + ", " + j + "] = 0";
+                    if (btn[i, j].BackColor == player_color) textBox1.Text += "xxx.board[" + i + ", " + j + "] = 2;\r\n";
+                    if (btn[i, j].BackColor == computer_color) textBox1.Text += "xxx.board[" + i + ", " + j + "] = 1;\r\n";
+                }
         }
         //test
     }
