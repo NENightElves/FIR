@@ -63,9 +63,9 @@ namespace FIR.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap empty {
+        internal static System.Drawing.Bitmap circle_black {
             get {
-                object obj = ResourceManager.GetObject("empty", resourceCulture);
+                object obj = ResourceManager.GetObject("circle_black", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace FIR.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap hollow_circle {
+        internal static System.Drawing.Bitmap circle_write {
             get {
-                object obj = ResourceManager.GetObject("hollow_circle", resourceCulture);
+                object obj = ResourceManager.GetObject("circle_write", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,19 @@ namespace FIR.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap solid_sircle {
+        internal static System.Drawing.Bitmap cross {
             get {
-                object obj = ResourceManager.GetObject("solid_sircle", resourceCulture);
+                object obj = ResourceManager.GetObject("cross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap FIRBOARD {
+            get {
+                object obj = ResourceManager.GetObject("FIRBOARD", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

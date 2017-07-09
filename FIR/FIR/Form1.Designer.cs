@@ -36,7 +36,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(2, 3);
+            this.button1.Location = new System.Drawing.Point(2, 405);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(73, 3);
+            this.button2.Location = new System.Drawing.Point(73, 405);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(76, 23);
             this.button2.TabIndex = 1;
@@ -56,7 +56,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(155, 3);
+            this.button3.Location = new System.Drawing.Point(155, 405);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(73, 23);
             this.button3.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(234, 1);
+            this.textBox1.Location = new System.Drawing.Point(234, 403);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -77,7 +77,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(440, 495);
+            this.BackgroundImage = global::FIR.Properties.Resources.FIRBOARD;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(398, 629);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
