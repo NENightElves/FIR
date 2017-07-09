@@ -184,7 +184,10 @@ namespace FIR
             //        sum += 2 * ROW_zero_out_1;
             //        break;
             //}
-            if ((num_me == 5) && (num_zero_in == 0)) sum += ROW_me_5;
+            if ((num_me == 5) && (num_zero_in == 0))
+            {
+                if (mode == 1) sum += ROW_me_5 * 2; else sum += ROW_me_5;
+            }
             return sum;
         }
 
