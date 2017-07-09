@@ -91,15 +91,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\empty.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\hollow_circle.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\solid_sircle.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FIR_core\FIR_core.csproj">
       <Project>{655519f4-2542-42fe-b0b5-9ee0649e7ec4}</Project>
       <Name>FIR_core</Name>

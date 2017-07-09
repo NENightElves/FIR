@@ -109,7 +109,11 @@ namespace FIR
                     btn[i, j].Click += btn_event;
                     this.Controls.Add(btn[i, j]);
                 }
-            //this.Size = new Size(LEFT_MARGIN + RIGHT_MARGIN + BOARD_SIZE_X * BUTTON_SIZE_X, UP_MARGIN + DOWN_MARGIN + BOARD_SIZE_Y * BUTTON_SIZE_Y);
+            this.Size = new Size(416,490);
+            button1.Location = new Point(5, 410);
+            button2.Location = new Point(70, 410);
+            button3.Location = new Point(146, 410);
+            textBox1.Location = new Point(230, 411);
 
 
         }
