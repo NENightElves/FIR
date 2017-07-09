@@ -110,6 +110,7 @@ namespace FIR
             n++;
             copy_data();
             mode = 1;
+            button1.Enabled = false;
         }
 
         //test
