@@ -24,7 +24,8 @@ namespace FIR
         Button[,] btn = new Button[20, 20];
         int mode = 2;
         Color player_color = Color.Black;
-        Color computer_color = Color.Gray;
+        Color computer_color = Color.Red;
+        Color tmp_color;
         int n = 0;
         FIR_core[] step_record = new FIR_core[200];
 
@@ -101,8 +102,9 @@ namespace FIR
 
         private void button1_Click(object sender, EventArgs e)
         {
-            player_color = Color.Gray;
-            computer_color = Color.Black;
+            tmp_color = player_color;
+            player_color = computer_color;
+            computer_color = tmp_color;
             Random ran = new Random();
             btn[ran.Next(7, 10), ran.Next(7, 10)].BackColor = Color.Black;
             n++;

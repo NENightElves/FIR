@@ -25,8 +25,12 @@ namespace FIR
         //int[,] boardimp1 = new int[20, 20];
         //int[,] boardimp2 = new int[20, 20];
         int num_you, num_me, num_zero_in, num_zero_out, num_zero_d_out;
-        int[] ROW_me = new int[6];
+        int[] ROW_me = new int[200];
 
+        private int GetIndex(int n)
+        {
+            return n + 50;
+        }
         public FIR_core()
         {
             int i, j;
@@ -38,11 +42,14 @@ namespace FIR
                     boardimp[i, j] = 0;
                 }
             }
-            ROW_me[1] = ROW_me_1;
-            ROW_me[2] = ROW_me_2;
-            ROW_me[3] = ROW_me_3;
-            ROW_me[4] = ROW_me_4;
-            ROW_me[5] = ROW_me_5;
+            ROW_me[GetIndex(1)] = ROW_me_1;
+            for (i = 2; i <= 10; i++) ROW_me[GetIndex(i)] = ROW_me[GetIndex(i - 1)] * 4 + 1;
+            //ROW_me[GetIndex(2)] = ROW_me_2;
+            //ROW_me[GetIndex(3)] = ROW_me_3;
+            //ROW_me[GetIndex(4)] = ROW_me_4;
+            //ROW_me[GetIndex(5)] = ROW_me_5;
+            ROW_me[GetIndex(0)] = 0;
+            for (i = 1; i <= 10; i++) ROW_me[GetIndex(-i)] = -ROW_me[GetIndex(i)];
             initial_num();
         }
 
@@ -135,7 +142,7 @@ namespace FIR
             }
 
             num_zero_in -= num_zero_d_out;
-            //if (num_zero_in > (5 - num_me)) num_zero_in = 0;
+            //if (num_zero_in > 3) num_zero_in = 0;
             if ((board[x1 - stepx, y1 - stepy] != mode) && (board[x1 - stepx, y1 - stepy] != 0)) num_you++;
             if ((board[x2 + stepx, y2 + stepy] != mode) && (board[x2 + stepx, y2 + stepy] != 0)) num_you++;
 
@@ -147,9 +154,9 @@ namespace FIR
         {
             int sum = 0;
             imp_collect_row(mode, x, y, stepx, stepy);
-            sum += ROW_me[num_me];
-            sum -= num_you * ROW_me[num_me - 1] * 2;
-            sum -= num_zero_in * ROW_me[num_me - 1];
+            sum += ROW_me[GetIndex(num_me -num_zero_in)];
+            sum -= num_you * ROW_me[GetIndex(num_me - 1)] * 2;
+            //sum -= num_zero_in * ROW_me[num_me - 1];
             //switch (num_you)
             //{
             //    case 1:
