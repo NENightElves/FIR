@@ -61,7 +61,7 @@ namespace FIR
                 }
         }
 
-        public bool IsWin()
+        private bool _IsWin(int x, int y, Image xy)
         {
             int i, j;
             int ii, jj;
@@ -72,28 +72,28 @@ namespace FIR
                     n = 0;
                     ii = i;
                     jj = j;
-                    while (btn[ii, jj].Image == player_color)
+                    while (btn[ii, jj].Image == xy)
                     {
-                        ii++;
-                        jj++;
+                        ii += x;
+                        jj += y;
                         n++;
                     }
-                    if (n == 5) { MessageBox.Show("玩家胜利！"); return true; }
+                    if (n == 5) { return true; }
                 }
-            for (i = 1; i <= 15; i++)
-                for (j = 1; j <= 15; j++)
-                {
-                    n = 0;
-                    ii = i;
-                    jj = j;
-                    while (btn[ii, jj].Image == computer_color)
-                    {
-                        ii++;
-                        jj++;
-                        n++;
-                    }
-                    if (n == 5) { MessageBox.Show("电脑胜利！"); return true; }
-                }
+            return false;
+        }
+        public bool IsWin()
+        {
+            if ((_IsWin(1, 1, player_color)) || (_IsWin(1, 0, player_color)) || (_IsWin(0, 1, player_color)) || (_IsWin(-1, 1, player_color)))
+            {
+                MessageBox.Show("玩家胜利");
+                return true;
+            }
+            if ((_IsWin(1, 1, computer_color)) || (_IsWin(1, 0, computer_color)) || (_IsWin(0, 1, computer_color)) || (_IsWin(-1, 1, computer_color)))
+            {
+                MessageBox.Show("电脑胜利");
+                return true;
+            }
             return false;
         }
 
@@ -132,6 +132,9 @@ namespace FIR
         {
             int i, j;
             n = 0;
+            button2.Visible = false;
+            button3.Visible = false;
+            textBox1.Visible = false;
             for (i = 1; i <= 199; i++)
             {
                 step_record[i] = new FIR_core(7);
