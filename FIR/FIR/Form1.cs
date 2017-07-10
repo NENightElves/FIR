@@ -30,7 +30,7 @@ namespace FIR
         Image cross = Properties.Resources.cross;
         Image tmp_color;
         int n;
-        FIR_core[] step_record = new FIR_core[200];
+        FIR_core[] step_record = new FIR_core[300];
         bool IsEnd;
 
         public Form1()
@@ -135,7 +135,7 @@ namespace FIR
             button2.Visible = false;
             button3.Visible = false;
             textBox1.Visible = false;
-            for (i = 1; i <= 199; i++)
+            for (i = 1; i <= 299; i++)
             {
                 step_record[i] = new FIR_core(7);
             }
@@ -182,6 +182,10 @@ namespace FIR
                 player_color = Properties.Resources.circle_black;
                 computer_color = Properties.Resources.circle_write;
                 n = 0;
+                for (i = 1; i <= 299; i++)
+                {
+                    step_record[i] = new FIR_core(7);
+                }
                 for (i = 1; i <= BOARD_SIZE_X; i++)
                     for (j = 1; j <= BOARD_SIZE_Y; j++)
                     {
