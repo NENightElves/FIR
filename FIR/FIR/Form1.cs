@@ -29,8 +29,9 @@ namespace FIR
         Image computer_color = Properties.Resources.circle_write;
         Image cross = Properties.Resources.cross;
         Image tmp_color;
-        int n = 0;
+        int n;
         FIR_core[] step_record = new FIR_core[200];
+        bool IsEnd;
 
         public Form1()
         {
@@ -60,28 +61,66 @@ namespace FIR
                 }
         }
 
+        public bool IsWin()
+        {
+            int i, j;
+            int ii, jj;
+            int n;
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    n = 0;
+                    ii = i;
+                    jj = j;
+                    while (btn[ii, jj].Image == player_color)
+                    {
+                        ii++;
+                        jj++;
+                        n++;
+                    }
+                    if (n == 5) { MessageBox.Show("玩家胜利！"); return true; }
+                }
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    n = 0;
+                    ii = i;
+                    jj = j;
+                    while (btn[ii, jj].Image == computer_color)
+                    {
+                        ii++;
+                        jj++;
+                        n++;
+                    }
+                    if (n == 5) { MessageBox.Show("电脑胜利！"); return true; }
+                }
+            return false;
+        }
+
         void btn_event(object sender, EventArgs e)
         {
             int x, y;
-            if ((sender as PictureBox).Image == cross)
+            if (n == 0) { IsEnd = false; button1.Text = "重开"; }
+            if ((IsEnd == false) && ((sender as PictureBox).Image == cross))
             {
                 n++;
                 (sender as PictureBox).Image = player_color;
+                if (IsWin()) { IsEnd = true; return; }
                 copy_data();
                 x = step_record[n].FindTarget();
                 y = x % 100;
                 x = x / 100;
                 btn[x, y].Image = computer_color;
+                if (IsWin()) { IsEnd = true; return; }
                 n++;
                 copy_data();
             }
-            else
-                return;
+            return;
         }
 
         void btn_mouse_enter(object sender, EventArgs e)
         {
-            if ((sender as PictureBox).Image==null) (sender as PictureBox).Image = cross;
+            if ((sender as PictureBox).Image == null) (sender as PictureBox).Image = cross;
         }
 
         void btn_mouse_leave(object sender, EventArgs e)
@@ -92,6 +131,7 @@ namespace FIR
         private void Form1_Load(object sender, EventArgs e)
         {
             int i, j;
+            n = 0;
             for (i = 1; i <= 199; i++)
             {
                 step_record[i] = new FIR_core(7);
@@ -109,7 +149,7 @@ namespace FIR
                     btn[i, j].Click += btn_event;
                     this.Controls.Add(btn[i, j]);
                 }
-            this.Size = new Size(416,490);
+            this.Size = new Size(416, 490);
             button1.Location = new Point(5, 410);
             button2.Location = new Point(70, 410);
             button3.Location = new Point(146, 410);
@@ -120,15 +160,32 @@ namespace FIR
 
         private void button1_Click(object sender, EventArgs e)
         {
-            tmp_color = player_color;
-            player_color = computer_color;
-            computer_color = tmp_color;
-            Random ran = new Random();
-            btn[ran.Next(7, 10), ran.Next(7, 10)].BackColor = Color.Black;
-            n++;
-            copy_data();
-            mode = 1;
-            button1.Enabled = false;
+            int i, j;
+            if (button1.Text == "电脑先")
+            {
+                tmp_color = player_color;
+                player_color = computer_color;
+                computer_color = tmp_color;
+                Random ran = new Random();
+                btn[ran.Next(7, 10), ran.Next(7, 10)].Image = computer_color;
+                n++;
+                IsEnd = false;
+                copy_data();
+                mode = 1;
+                button1.Text = "重开";
+            }
+            else
+            {
+                player_color = Properties.Resources.circle_black;
+                computer_color = Properties.Resources.circle_write;
+                n = 0;
+                for (i = 1; i <= BOARD_SIZE_X; i++)
+                    for (j = 1; j <= BOARD_SIZE_Y; j++)
+                    {
+                        btn[i, j].Image = null;
+                    }
+                button1.Text = "电脑先";
+            }
         }
 
         //test
