@@ -12,7 +12,7 @@ namespace UnitTestProject1
         {
             int i, j;
             int x, y;
-            FIR_core xxx = new FIR_core();
+            FIR_core xxx = new FIR_core(7);
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                 {
