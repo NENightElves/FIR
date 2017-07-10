@@ -139,8 +139,8 @@ namespace FIR
             {
                 step_record[i] = new FIR_core(7);
             }
-            for (i = 1; i <= BOARD_SIZE_X; i++)
-                for (j = 1; j <= BOARD_SIZE_Y; j++)
+            for (i = 0; i <= BOARD_SIZE_X + 1; i++)
+                for (j = 0; j <= BOARD_SIZE_Y + 1; j++)
                 {
                     btn[i, j] = new PictureBox();
                     btn[i, j].Size = new Size(BUTTON_SIZE_X, BUTTON_SIZE_Y);
@@ -152,6 +152,17 @@ namespace FIR
                     btn[i, j].Click += btn_event;
                     this.Controls.Add(btn[i, j]);
                 }
+            for (i = 0; i <= BOARD_SIZE_X + 1; i++)
+            {
+                btn[i, 0].Visible = false;
+                btn[0, i].Visible = false;
+                btn[i, BOARD_SIZE_X + 1].Visible = false;
+                btn[BOARD_SIZE_X + 1, i].Visible = false;
+                btn[i, 0].Enabled = false;
+                btn[0, i].Enabled = false;
+                btn[i, BOARD_SIZE_X + 1].Enabled = false;
+                btn[BOARD_SIZE_X + 1, i].Enabled = false;
+            }
             this.Size = new Size(416, 490);
             button1.Location = new Point(5, 410);
             button2.Location = new Point(70, 410);
