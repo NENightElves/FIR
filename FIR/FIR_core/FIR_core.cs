@@ -344,7 +344,7 @@ namespace FIR
         int GetLineEnd(ref int X, ref int Y);
         string GenerateLine(int[][] board, int StartX, int StartY,int EndX,int EndY,int StepX,int StepY);
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
-
+        bool IsPositionOnLine(int Start, int End, int Position);
     }
 
     public class FIR_core_V2 : FIR_core_V2_Func
