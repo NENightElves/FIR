@@ -336,6 +336,70 @@ namespace FIR
     }
 
 
+    interface FIR_core_V2_Func
+    {
+        int GetAllShape(int[][] board, int X, int Y);
+        int GetLineShape(int[][] board, int X, int Y, int StepX, int StepY);
+        int GetLineStart(ref int X, ref int Y);
+        int GetLineEnd(ref int X, ref int Y);
+        string GenerateLine(int[][] board, int StartX, int StartY,int EndX,int EndY,int StepX,int StepY);
+        int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
+
+    }
+
+    public class FIR_core_V2 : FIR_core_V2_Func
+    {
+        #region const
+        const int Five = 1;
+        const int LiveFour = 2;
+        const int RushFour = 3;
+        const int LiveThree = 4;
+        const int SleepThree = 5;
+        const int LiveTwo = 6;
+        const int SleepTwo = 7;
+        const int DieFour = 8;
+        const int DieThree = 9;
+        const int DieTwo = 10;
+
+        const int ShapeFive = 101;
+        const int ShapeLiveFour = 102;
+        const int ShapeDoubleRushFour = 103;
+        const int ShapeRushFourLiveThree = 104;
+        const int ShapeDoubleLiveThree = 105;
+        const int ShapeLiveThreeSleepThree = 106;
+        const int ShapeSleepFour = 107;
+        const int ShapeLiveThree = 108;
+        const int ShapeDoubleLiveTwo = 109;
+        const int ShapeSleepThree = 110;
+        const int ShapeLiveTwoSleepTwo = 111;
+        const int ShapeLiveTwo = 112;
+        const int ShapeSleepTwo = 113;
+        const int ShapeDieFour = 114;
+        const int ShapeDieThree = 115;
+        const int ShapeDieTwo = 116;
+
+        const int ScoreFive = 100000;
+        const int ScoreLiveFour = 10000;
+        const int ScoreDoubleRushFour = 10000;
+        const int ScoreRushFourLiveThree = 10000;
+        const int ScoreDoubleLiveThree = 5000;
+        const int ScoreLiveThreeSleepThree = 1000;
+        const int ScoreSleepFour = 500;
+        const int ScoreLiveThree = 200;
+        const int ScoreDoubleLiveTwo = 100;
+        const int ScoreSleepThree = 50;
+        const int ScoreLiveTwoSleepTwo = 10;
+        const int ScoreLiveTwo = 5;
+        const int ScoreSleepTwo = 3;
+        const int ScoreDieFour = -5;
+        const int ScoreDieThree = -5;
+        const int ScoreDieTwo = -5;
+        #endregion
+
+
+    }
+
+
 }
 
 
