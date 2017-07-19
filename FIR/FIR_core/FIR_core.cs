@@ -412,8 +412,6 @@ namespace FIR
         int[] ShapeBaseLength = new int[20];
         #endregion
 
-
-
         public FIR_core_V2()
         {
             int i, j, k;
@@ -503,6 +501,10 @@ namespace FIR
             for (i = 1; i <= SIZE; i++)
                 for (j = 1; j <= SIZE; j++)
                     if (board[i, j] == 1) board[i, j] = 2; else if (board[i, j] == 2) board[i, j] = 1;
+        }
+        static bool IsOnBoard(int X, int Y, int size)
+        {
+            if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
         }
 
         #region ShapeJudgment
@@ -623,7 +625,6 @@ namespace FIR
         }
         #endregion
 
-
         void GetLineStart(ref int X, ref int Y, int Direction)
         {
             switch (Direction)
@@ -661,10 +662,6 @@ namespace FIR
             }
 
         }
-        bool IsOnBoard(int X, int Y, int size)
-        {
-            if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
-        }
         string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY)
         {
             int StepX, StepY;
@@ -673,7 +670,7 @@ namespace FIR
             s = "";
             if (Math.Abs(EndX - StartX) != (Math.Abs(EndX - StartX))) return s;
             StepX = (EndX - StartX > 0) ? 1 : (EndX - StartX < 0) ? -1 : 0;
-            StepY = (EndY - StartY > 0) ? 1 : (EndX - StartX < 0) ? -1 : 0;
+            StepY = (EndY - StartY > 0) ? 1 : (EndY - StartY < 0) ? -1 : 0;
             EndX += StepX;
             EndY += StepY;
             for (i = StartX, j = StartY; (i != EndX || j!=EndY) ; i += StepX, j += StepY)
@@ -711,7 +708,7 @@ namespace FIR
         {
             if ((Position >= Start) && (Position <= End)) return true; else return false;
         }
-        public int GetLineShape(int[,] board, int X, int Y, int Direction)
+        int GetLineShape(int[,] board, int X, int Y, int Direction)
         {
             int start_x, start_y, end_x, end_y;
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
@@ -779,8 +776,6 @@ namespace FIR
         }
 
     }
-
-
 }
 
 

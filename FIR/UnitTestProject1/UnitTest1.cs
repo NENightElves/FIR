@@ -68,11 +68,9 @@ namespace UnitTestProject1
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                     a[i, j] = 0;
-            a[1, 1] = 0;a[2, 2] = 1;a[3, 3] = 1;a[4, 4] = 1;a[5, 5] = 0;
-            Console.WriteLine(xxx.GetLineShape(a, 2, 2, 4));
-
-
-
+            a[2, 2] = 1; a[3, 3] = 1; a[4, 4] = 1; a[5, 5] = 1; a[6, 6] = 0;
+            a[2, 3] = 1; a[2, 4] = 1; a[2, 5] = 2;
+            Console.WriteLine(xxx.GetAllShape(a, 2, 2));        
         }
     }
 }
