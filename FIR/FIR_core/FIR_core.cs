@@ -402,17 +402,36 @@ namespace FIR
         const int DirectionLine45 = 202;
         const int DirectionLine90 = 203;
         const int DirectionLine135 = 204;
+
+        string[,] ShapeBase = new string[20, 20];
+        int[] ShapeBaseLength = new int[20];
         #endregion
 
-        string[,] ShapeBase = new string[20, 10];
+
 
         public FIR_core_V2()
         {
+            int i, j, k;
             #region const
-            int i, j;
+            int tmp;
+            string tmps;
             for (i = 0; i <= 19; i++)
-                for (j = 0; j <= 9; j++)
+            {
+                for (j = 0; j <= 19; j++)
                     ShapeBase[i, j] = "";
+                ShapeBaseLength[i] = 0;
+            }
+            ShapeBaseLength[Five] = 1;
+            ShapeBaseLength[LiveFour] = 1;
+            ShapeBaseLength[RushFour] = 3;
+            ShapeBaseLength[LiveThree] = 2;
+            ShapeBaseLength[SleepThree] = 6;
+            ShapeBaseLength[LiveTwo] = 3;
+            ShapeBaseLength[SleepTwo] = 6;
+            ShapeBaseLength[DieFour] = 1;
+            ShapeBaseLength[DieThree] = 1;
+            ShapeBaseLength[DieTwo] = 1;
+
             ShapeBase[Five, 1] = "11111";
             ShapeBase[LiveFour, 1] = "011110";
             ShapeBase[RushFour, 1] = "011112";
@@ -438,6 +457,18 @@ namespace FIR
             ShapeBase[DieFour, 1] = "211112";
             ShapeBase[DieThree, 1] = "21112";
             ShapeBase[DieTwo, 1] = "2112";
+
+            for (i = 1; i <= 10; i++)
+            {
+                tmp = ShapeBaseLength[i];
+                for (j = 1; j <=tmp;j++)
+                {
+                    tmps = "";
+                    for (k = ShapeBase[i, j].Length - 1; k >= 0; k--)
+                        tmps += ShapeBase[i, j][k];
+                    if (tmps != ShapeBase[i, j]) { ShapeBaseLength[i]++; ShapeBase[i, ShapeBaseLength[i]] = tmps; }
+                }
+            }
             #endregion
         }
 
