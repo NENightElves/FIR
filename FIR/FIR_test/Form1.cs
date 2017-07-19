@@ -81,7 +81,7 @@ namespace FIR
             int i, j;
             for (i = 1; i <= 199; i++)
             {
-                step_record[i] = new FIR_core();
+                step_record[i] = new FIR_core(7);
             }
             for (i = 0; i <= BOARD_SIZE_X; i++)
                 for (j = 0; j <= BOARD_SIZE_Y; j++)
@@ -117,7 +117,7 @@ namespace FIR
         private void button2_Click(object sender, EventArgs e)
         {
             int i, j;
-            FIR_core xxx = new FIR_core();
+            FIR_core xxx = new FIR_core(7);
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                 {

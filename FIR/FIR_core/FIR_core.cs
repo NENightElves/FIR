@@ -336,20 +336,23 @@ namespace FIR
     }
 
 
-    interface FIR_core_V2_Func
+    interface FIR_core_V2_Func_List
     {
-        int GetAllShape(int[][] board, int X, int Y);
-        int GetLineShape(int[][] board, int X, int Y, int StepX, int StepY);
-        int GetLineStart(ref int X, ref int Y);
-        int GetLineEnd(ref int X, ref int Y);
-        string GenerateLine(int[][] board, int StartX, int StartY,int EndX,int EndY,int StepX,int StepY);
+        int GetAllShape(int[,] board, int X, int Y);
+        int GetLineShape(int[,] board, int X, int Y, int StepX, int StepY);
+        void GetLineStart(ref int X, ref int Y, int Direction);
+        void GetLineEnd(ref int X, ref int Y, int Direction);
+        string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY);
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
         bool IsPositionOnLine(int Start, int End, int Position);
+        bool IsOnBoard(int X, int Y, int size);
     }
 
-    public class FIR_core_V2 : FIR_core_V2_Func
+    public class FIR_core_V2
     {
         #region const
+        const int SIZE = 15;
+
         const int Five = 1;
         const int LiveFour = 2;
         const int RushFour = 3;
@@ -394,8 +397,74 @@ namespace FIR
         const int ScoreDieFour = -5;
         const int ScoreDieThree = -5;
         const int ScoreDieTwo = -5;
+
+        const int DirectionLine0 = 201;
+        const int DirectionLine45 = 202;
+        const int DirectionLine90 = 203;
+        const int DirectionLine135 = 204;
         #endregion
 
+        void GetLineStart(ref int X, ref int Y, int Direction)
+        {
+            switch (Direction)
+            {
+                case DirectionLine0:
+                    X = 1;
+                    break;
+                case DirectionLine45:
+                    if (X > SIZE - Y) { X = X + Y - SIZE; Y = SIZE; } else { Y = X + Y - 1; X = 1; }
+                    break;
+                case DirectionLine90:
+                    Y = 1;
+                    break;
+                case DirectionLine135:
+                    if (X > Y) { X = X - Y + 1; Y = 1; } else { Y = Y - X + 1; X = 1; }
+                    break;
+            }
+        }
+
+        void GetLineEnd(ref int X, ref int Y, int Direction)
+        {
+            switch (Direction)
+            {
+                case DirectionLine0:
+                    X = SIZE;
+                    break;
+                case DirectionLine45:
+                    if (SIZE - X > Y) { X = X + Y - 1; Y = 1; } else { Y = X + Y - SIZE; X = SIZE; }
+                    break;
+                case DirectionLine90:
+                    Y = SIZE;
+                    break;
+                case DirectionLine135:
+                    if (X < Y) { X = X + SIZE - Y; Y = SIZE; } else { Y = Y + SIZE - X; X = SIZE; }
+                    break;
+            }
+
+        }
+
+        bool IsOnBoard(int X, int Y, int size)
+        {
+            if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
+        }
+
+        public string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY)
+        {
+            int StepX, StepY;
+            int i, j;
+            string s;
+            s = "";
+            if (Math.Abs(EndX - StartX) != (Math.Abs(EndX - StartX))) return s;
+            StepX = (EndX - StartX > 0) ? 1 : -1;
+            StepY = (EndY - StartY > 0) ? 1 : -1;
+            EndX += StepX;
+            EndY += StepY;
+            for (i = StartX, j = StartY; i != EndX; i += StepX, j += StepY)
+            {
+                s += board[i, j];
+            }
+            return s;
+        }
 
     }
 

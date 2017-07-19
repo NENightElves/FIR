@@ -58,5 +58,21 @@ namespace UnitTestProject1
             Console.WriteLine(xxx.imp_collect_calc(2, x, y, 0, 1));
             Console.WriteLine(xxx.imp_collect_calc(2, x, y, 1, -1));
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            FIR_core_V2 xxx = new FIR_core_V2();
+            int x, y;
+            int[,] a = new int[8, 8];
+            int i, j;
+            for (i = 1; i <= 7; i++)
+                for (j = 1; j <= 7; j++)
+                    a[i, j] = i * 10 + j;
+            Console.WriteLine( xxx.GenerateLine(a, 7,7,7,7));
+
+
+
+        }
     }
 }
