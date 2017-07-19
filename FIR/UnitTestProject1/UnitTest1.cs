@@ -68,8 +68,9 @@ namespace UnitTestProject1
             int i, j;
             for (i = 1; i <= 7; i++)
                 for (j = 1; j <= 7; j++)
-                    a[i, j] = i * 10 + j;
-            Console.WriteLine( xxx.GenerateLine(a, 7,7,7,7));
+                    a[i, j] = 0;
+            a[1, 1] = 1;a[1, 2] = 1;a[1, 3] = 1;a[1, 4] = 1;a[1, 5] = 1;
+            Console.WriteLine(xxx.GetLineShape(a, 1, 2, 1));
 
 
 

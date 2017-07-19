@@ -339,10 +339,11 @@ namespace FIR
     interface FIR_core_V2_Func_List
     {
         int GetAllShape(int[,] board, int X, int Y);
-        int GetLineShape(int[,] board, int X, int Y, int StepX, int StepY);
+        int GetLineShape(int[,] board, int X, int Y, int Direction);
         void GetLineStart(ref int X, ref int Y, int Direction);
         void GetLineEnd(ref int X, ref int Y, int Direction);
         string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY);
+        int FindShapeOnLine(string line, string shape, int n);
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
         bool IsPositionOnLine(int Start, int End, int Position);
         bool IsOnBoard(int X, int Y, int size);
@@ -353,6 +354,7 @@ namespace FIR
         #region const
         const int SIZE = 15;
 
+        const int NoShapeBase = 0;
         const int Five = 1;
         const int LiveFour = 2;
         const int RushFour = 3;
@@ -398,10 +400,10 @@ namespace FIR
         const int ScoreDieThree = -5;
         const int ScoreDieTwo = -5;
 
-        const int DirectionLine0 = 201;
-        const int DirectionLine45 = 202;
-        const int DirectionLine90 = 203;
-        const int DirectionLine135 = 204;
+        const int DirectionLine0 = 1;
+        const int DirectionLine45 = 2;
+        const int DirectionLine90 = 3;
+        const int DirectionLine135 = 4;
 
         string[,] ShapeBase = new string[20, 20];
         int[] ShapeBaseLength = new int[20];
@@ -461,7 +463,7 @@ namespace FIR
             for (i = 1; i <= 10; i++)
             {
                 tmp = ShapeBaseLength[i];
-                for (j = 1; j <=tmp;j++)
+                for (j = 1; j <= tmp; j++)
                 {
                     tmps = "";
                     for (k = ShapeBase[i, j].Length - 1; k >= 0; k--)
@@ -477,13 +479,13 @@ namespace FIR
             switch (Direction)
             {
                 case DirectionLine0:
-                    X = 1;
+                    Y = 1;
                     break;
                 case DirectionLine45:
                     if (X > SIZE - Y) { X = X + Y - SIZE; Y = SIZE; } else { Y = X + Y - 1; X = 1; }
                     break;
                 case DirectionLine90:
-                    Y = 1;
+                    X = 1;
                     break;
                 case DirectionLine135:
                     if (X > Y) { X = X - Y + 1; Y = 1; } else { Y = Y - X + 1; X = 1; }
@@ -495,13 +497,13 @@ namespace FIR
             switch (Direction)
             {
                 case DirectionLine0:
-                    X = SIZE;
+                    Y = SIZE;
                     break;
                 case DirectionLine45:
                     if (SIZE - X > Y) { X = X + Y - 1; Y = 1; } else { Y = X + Y - SIZE; X = SIZE; }
                     break;
                 case DirectionLine90:
-                    Y = SIZE;
+                    X = SIZE;
                     break;
                 case DirectionLine135:
                     if (X < Y) { X = X + SIZE - Y; Y = SIZE; } else { Y = Y + SIZE - X; X = SIZE; }
@@ -513,7 +515,7 @@ namespace FIR
         {
             if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
         }
-        public string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY)
+        string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY)
         {
             int StepX, StepY;
             int i, j;
@@ -530,7 +532,68 @@ namespace FIR
             }
             return s;
         }
+        int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y)
+        {
+            int StepX;
+            int result;
+            StepX = (EndX - StartX > 0) ? 1 : -1;
+            result = (X - StartX) / StepX;
+            return result;
+        }
+        int FindShapeOnLine(string line, string shape, int n)
+        {
+            int i;
+            string tmp;
+            for (i = n; i <= line.Length - shape.Length + 1; i++)
+            {
+                tmp = line.Substring(n - 1, shape.Length);
+                if (tmp == shape) return i;
+            }
+            return 0;
+        }
+        bool IsPositionOnLine(int Start, int End, int Position)
+        {
+            if ((Position >= Start) && (Position <= End)) return true; else return false;
+        }
+        public int GetLineShape(int[,] board, int X, int Y, int Direction)
+        {
+            int start_x, start_y, end_x, end_y;
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            int position, position_l, position_r;
+            string s;
+            int i, j;
 
+            start_x = X;
+            start_y = Y;
+            end_x = X;
+            end_y = Y;
+
+            tmp_board = board;
+            GetLineStart(ref start_x, ref start_y, Direction);
+            GetLineEnd(ref end_x, ref end_y, Direction);
+            s = GenerateLine(tmp_board, start_x, start_y, end_x, end_y);
+            position = PositionOnLine(start_x, start_y, end_x, end_y, X, Y);
+            position_l = 0;
+            for (i = 1; i <= 10; i++)
+            {
+                for (j = 1; j <= ShapeBaseLength[i]; j++)
+                {
+                    do
+                    {
+                        position_l++;
+                        position_r = ShapeBase[i, j].Length;
+                        position_l = FindShapeOnLine(s, ShapeBase[i, j], position_l);
+                        position_r = position_r + position_l - 1;
+                    } while (!(IsPositionOnLine(position_l, position_r, position)) || (position_l != 0));
+
+                    if (position_l != 0)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 
 
