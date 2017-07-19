@@ -346,7 +346,7 @@ namespace FIR
         int FindShapeOnLine(string line, string shape, int n);
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
         bool IsPositionOnLine(int Start, int End, int Position);
-        bool IsOnBoard(int X, int Y, int size);
+        bool IsOnBoard(int X, int Y, int size);        
     }
 
     public class FIR_core_V2
@@ -366,30 +366,32 @@ namespace FIR
         const int DieThree = 9;
         const int DieTwo = 10;
 
-        const int ShapeFive = 101;
-        const int ShapeLiveFour = 102;
-        const int ShapeDoubleRushFour = 103;
-        const int ShapeRushFourLiveThree = 104;
-        const int ShapeDoubleLiveThree = 105;
-        const int ShapeLiveThreeSleepThree = 106;
-        const int ShapeSleepFour = 107;
-        const int ShapeLiveThree = 108;
-        const int ShapeDoubleLiveTwo = 109;
-        const int ShapeSleepThree = 110;
-        const int ShapeLiveTwoSleepTwo = 111;
-        const int ShapeLiveTwo = 112;
-        const int ShapeSleepTwo = 113;
-        const int ShapeDieFour = 114;
-        const int ShapeDieThree = 115;
-        const int ShapeDieTwo = 116;
+        const int NoShape = 0;
+        const int ShapeFive = 1;
+        const int ShapeLiveFour = 2;
+        const int ShapeDoubleRushFour = 3;
+        const int ShapeRushFourLiveThree = 4;
+        const int ShapeDoubleLiveThree = 5;
+        const int ShapeLiveThreeSleepThree = 6;
+        const int ShapeRushFour = 7;
+        const int ShapeLiveThree = 8;
+        const int ShapeDoubleLiveTwo = 9;
+        const int ShapeSleepThree = 10;
+        const int ShapeLiveTwoSleepTwo = 11;
+        const int ShapeLiveTwo = 12;
+        const int ShapeSleepTwo = 13;
+        const int ShapeDieFour = 14;
+        const int ShapeDieThree = 15;
+        const int ShapeDieTwo = 16;
 
+        const int NoScore = 0;
         const int ScoreFive = 100000;
         const int ScoreLiveFour = 10000;
         const int ScoreDoubleRushFour = 10000;
         const int ScoreRushFourLiveThree = 10000;
         const int ScoreDoubleLiveThree = 5000;
         const int ScoreLiveThreeSleepThree = 1000;
-        const int ScoreSleepFour = 500;
+        const int ScoreRushFour = 500;
         const int ScoreLiveThree = 200;
         const int ScoreDoubleLiveTwo = 100;
         const int ScoreSleepThree = 50;
@@ -406,6 +408,7 @@ namespace FIR
         const int DirectionLine135 = 4;
 
         string[,] ShapeBase = new string[20, 20];
+        int[] ScoreShape = new int[20];
         int[] ShapeBaseLength = new int[20];
         #endregion
 
@@ -420,7 +423,10 @@ namespace FIR
             for (i = 0; i <= 19; i++)
             {
                 for (j = 0; j <= 19; j++)
+                {
                     ShapeBase[i, j] = "";
+                }
+                ScoreShape[i] = 0;
                 ShapeBaseLength[i] = 0;
             }
             ShapeBaseLength[Five] = 1;
@@ -471,8 +477,152 @@ namespace FIR
                     if (tmps != ShapeBase[i, j]) { ShapeBaseLength[i]++; ShapeBase[i, ShapeBaseLength[i]] = tmps; }
                 }
             }
+
+            ScoreShape[ShapeFive] = 100000;
+            ScoreShape[ShapeLiveFour] = 10000;
+            ScoreShape[ShapeDoubleRushFour] = 10000;
+            ScoreShape[ShapeRushFourLiveThree] = 10000;
+            ScoreShape[ShapeDoubleLiveThree] = 5000;
+            ScoreShape[ShapeLiveThreeSleepThree] = 1000;
+            ScoreShape[ShapeRushFour] = 500;
+            ScoreShape[ShapeLiveThree] = 200;
+            ScoreShape[ShapeDoubleLiveTwo] = 100;
+            ScoreShape[ShapeSleepThree] = 50;
+            ScoreShape[ShapeLiveTwoSleepTwo] = 10;
+            ScoreShape[ShapeLiveTwo] = 5;
+            ScoreShape[ShapeSleepTwo] = 3;
+            ScoreShape[ShapeDieFour] = -5;
+            ScoreShape[ShapeDieThree] = -5;
+            ScoreShape[ShapeDieTwo] = -5;
             #endregion
         }
+
+        static void ChangeBoard(int[,] board)
+        {
+            int i, j;
+            for (i = 1; i <= SIZE; i++)
+                for (j = 1; j <= SIZE; j++)
+                    if (board[i, j] == 1) board[i, j] = 2; else if (board[i, j] == 2) board[i, j] = 1;
+        }
+
+        #region ShapeJudgment
+        bool IsShapeFive(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == Five) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeLiveFour(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveFour) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeDoubleRushFour(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == RushFour) s++;
+            if (s == 2) return true; else return false;
+        }
+        bool IsShapeRushFourLiveThree(int[] a)
+        {
+            int i;
+            bool x = false, y = false;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == RushFour) x = true; else if (a[i] == LiveThree) y = true;
+            if (x && y) return true; else return false;
+        }
+        bool IsShapeDoubleLiveThree(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveThree) s++;
+            if (s == 2) return true; else return false;
+        }
+        bool IsShapeLiveThreeSleepThree(int[] a)
+        {
+            int i;
+            bool x = false, y = false;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveThree) x = true; else if (a[i] == SleepThree) y = true;
+            if (x && y) return true; else return false;
+        }
+        bool IsShapeRushFour(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == RushFour) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeLiveThree(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveThree) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeDoubleLiveTwo(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveTwo) s++;
+            if (s == 2) return true; else return false;
+        }
+        bool IsShapeSleepThree(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == SleepThree) s++;
+            if (s == 1) return true; else return false;                     
+        }
+        bool IsShapeLiveTwoSleepTwo(int[] a)
+        {
+            int i;
+            bool x = false, y = false;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveTwo) x = true; else if (a[i] == SleepTwo) y = true;
+            if (x && y) return true; else return false;
+        }
+        bool IsShapeLiveTwo(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == LiveTwo) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeSleepTwo(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == SleepTwo) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeDieFour(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == DieFour) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeDieThree(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == DieThree) s++;
+            if (s == 1) return true; else return false;
+        }
+        bool IsShapeDieTwo(int[] a)
+        {
+            int i, s = 0;
+            for (i = 1; i <= 4; i++)
+                if (a[i] == DieTwo) s++;
+            if (s == 1) return true; else return false;
+        }
+        #endregion
+
 
         void GetLineStart(ref int X, ref int Y, int Direction)
         {
@@ -522,11 +672,11 @@ namespace FIR
             string s;
             s = "";
             if (Math.Abs(EndX - StartX) != (Math.Abs(EndX - StartX))) return s;
-            StepX = (EndX - StartX > 0) ? 1 : -1;
-            StepY = (EndY - StartY > 0) ? 1 : -1;
+            StepX = (EndX - StartX > 0) ? 1 : (EndX - StartX < 0) ? -1 : 0;
+            StepY = (EndY - StartY > 0) ? 1 : (EndX - StartX < 0) ? -1 : 0;
             EndX += StepX;
             EndY += StepY;
-            for (i = StartX, j = StartY; i != EndX; i += StepX, j += StepY)
+            for (i = StartX, j = StartY; (i != EndX || j!=EndY) ; i += StepX, j += StepY)
             {
                 s += board[i, j];
             }
@@ -534,10 +684,17 @@ namespace FIR
         }
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y)
         {
-            int StepX;
+            int StepX,StepY;
             int result;
-            StepX = (EndX - StartX > 0) ? 1 : -1;
-            result = (X - StartX) / StepX;
+            result = 0;
+            if (EndX - StartX != 0)
+            {
+                result = X;
+            }
+            else
+            {
+                result = Y;
+            }
             return result;
         }
         int FindShapeOnLine(string line, string shape, int n)
@@ -584,7 +741,7 @@ namespace FIR
                         position_r = ShapeBase[i, j].Length;
                         position_l = FindShapeOnLine(s, ShapeBase[i, j], position_l);
                         position_r = position_r + position_l - 1;
-                    } while (!(IsPositionOnLine(position_l, position_r, position)) || (position_l != 0));
+                    } while (!(IsPositionOnLine(position_l, position_r, position) || (position_l == 0)));
 
                     if (position_l != 0)
                     {
@@ -594,6 +751,34 @@ namespace FIR
             }
             return 0;
         }
+        public int GetAllShape(int[,] board, int X, int Y)
+        {
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            int[] shape=new int[5];
+            tmp_board = board;
+            shape[1] = GetLineShape(tmp_board, X, Y, DirectionLine0);
+            shape[2] = GetLineShape(tmp_board, X, Y, DirectionLine45);
+            shape[3] = GetLineShape(tmp_board, X, Y, DirectionLine90);
+            shape[4] = GetLineShape(tmp_board, X, Y, DirectionLine135);
+            if (IsShapeFive(shape)) return ShapeFive;
+            if (IsShapeLiveFour(shape)) return ShapeLiveFour;
+            if (IsShapeDoubleRushFour(shape)) return ShapeDoubleRushFour;
+            if (IsShapeRushFourLiveThree(shape)) return ShapeRushFourLiveThree;
+            if (IsShapeDoubleLiveThree(shape)) return ShapeDoubleLiveThree;
+            if (IsShapeLiveThreeSleepThree(shape)) return ShapeLiveThreeSleepThree;
+            if (IsShapeRushFour(shape)) return RushFour;
+            if (IsShapeLiveThree(shape)) return ShapeLiveThree;
+            if (IsShapeDoubleLiveTwo(shape)) return ShapeDoubleLiveTwo;
+            if (IsShapeSleepThree(shape)) return ShapeSleepThree;
+            if (IsShapeLiveTwoSleepTwo(shape)) return ShapeLiveTwoSleepTwo;
+            if (IsShapeLiveTwo(shape)) return ShapeLiveTwo;
+            if (IsShapeSleepTwo(shape)) return ShapeSleepTwo;
+            if (IsShapeDieFour(shape)) return DieFour;
+            if (IsShapeDieThree(shape)) return DieThree;
+            if (IsShapeDieTwo(shape)) return DieTwo;
+            return NoShape;
+        }
+
     }
 
 

@@ -64,13 +64,13 @@ namespace UnitTestProject1
         {
             FIR_core_V2 xxx = new FIR_core_V2();
             int x, y;
-            int[,] a = new int[8, 8];
+            int[,] a = new int[16, 16];
             int i, j;
-            for (i = 1; i <= 7; i++)
-                for (j = 1; j <= 7; j++)
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
                     a[i, j] = 0;
-            a[1, 1] = 1;a[1, 2] = 1;a[1, 3] = 1;a[1, 4] = 1;a[1, 5] = 1;
-            Console.WriteLine(xxx.GetLineShape(a, 1, 2, 1));
+            a[1, 1] = 0;a[2, 2] = 1;a[3, 3] = 1;a[4, 4] = 1;a[5, 5] = 0;
+            Console.WriteLine(xxx.GetLineShape(a, 2, 2, 4));
 
 
 
