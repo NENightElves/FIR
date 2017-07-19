@@ -63,7 +63,6 @@ namespace UnitTestProject1
         public void TestMethod2()
         {
             FIR_core_V2 xxx = new FIR_core_V2();
-            int x, y;
             int[,] a = new int[16, 16];
             int i, j;
             for (i = 1; i <= 15; i++)

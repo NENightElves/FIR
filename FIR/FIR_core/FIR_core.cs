@@ -684,7 +684,6 @@ namespace FIR
         }
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y)
         {
-            int StepX,StepY;
             int result;
             result = 0;
             if (EndX - StartX != 0)
