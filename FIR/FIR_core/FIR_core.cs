@@ -404,6 +404,43 @@ namespace FIR
         const int DirectionLine135 = 204;
         #endregion
 
+        string[,] ShapeBase = new string[20, 10];
+
+        public FIR_core_V2()
+        {
+            #region const
+            int i, j;
+            for (i = 0; i <= 19; i++)
+                for (j = 0; j <= 9; j++)
+                    ShapeBase[i, j] = "";
+            ShapeBase[Five, 1] = "11111";
+            ShapeBase[LiveFour, 1] = "011110";
+            ShapeBase[RushFour, 1] = "011112";
+            ShapeBase[RushFour, 2] = "0101110";
+            ShapeBase[RushFour, 3] = "0110110";
+            ShapeBase[LiveThree, 1] = "01110";
+            ShapeBase[LiveThree, 2] = "010110";
+            ShapeBase[SleepThree, 1] = "001112";
+            ShapeBase[SleepThree, 2] = "010112";
+            ShapeBase[SleepThree, 3] = "011012";
+            ShapeBase[SleepThree, 4] = "10011";
+            ShapeBase[SleepThree, 5] = "10101";
+            ShapeBase[SleepThree, 6] = "2011102";
+            ShapeBase[LiveTwo, 1] = "00110";
+            ShapeBase[LiveTwo, 2] = "01010";
+            ShapeBase[LiveTwo, 3] = "010010";
+            ShapeBase[SleepTwo, 1] = "000112";
+            ShapeBase[SleepTwo, 2] = "001012";
+            ShapeBase[SleepTwo, 3] = "010012";
+            ShapeBase[SleepTwo, 4] = "10001";
+            ShapeBase[SleepTwo, 5] = "2010102";
+            ShapeBase[SleepTwo, 6] = "2011002";
+            ShapeBase[DieFour, 1] = "211112";
+            ShapeBase[DieThree, 1] = "21112";
+            ShapeBase[DieTwo, 1] = "2112";
+            #endregion
+        }
+
         void GetLineStart(ref int X, ref int Y, int Direction)
         {
             switch (Direction)
@@ -422,7 +459,6 @@ namespace FIR
                     break;
             }
         }
-
         void GetLineEnd(ref int X, ref int Y, int Direction)
         {
             switch (Direction)
@@ -442,12 +478,10 @@ namespace FIR
             }
 
         }
-
         bool IsOnBoard(int X, int Y, int size)
         {
             if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
         }
-
         public string GenerateLine(int[,] board, int StartX, int StartY, int EndX, int EndY)
         {
             int StepX, StepY;
