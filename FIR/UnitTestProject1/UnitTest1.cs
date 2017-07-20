@@ -64,13 +64,28 @@ namespace UnitTestProject1
         {
             FIR_core_V2 xxx = new FIR_core_V2();
             int[,] a = new int[16, 16];
+            int[,] imp = new int[16, 16];
             int i, j;
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                     a[i, j] = 0;
             a[2, 2] = 1; a[3, 3] = 1; a[4, 4] = 1; a[5, 5] = 1; a[6, 6] = 0;
             a[2, 3] = 1; a[2, 4] = 1; a[2, 5] = 2;
-            Console.WriteLine(xxx.GetAllShape(a, 2, 2));        
+            imp = xxx.GetAllImpWithBoard(a);
+            for (j = 0; j <= 15; j++)
+            {
+                Console.Write("[{0,-2}]   ", j);
+            }
+            Console.WriteLine();
+            for (i = 1; i <= 15; i++)
+            {
+                Console.Write("[{0,-2}]   ", i);
+                for (j = 1; j <= 15; j++)
+                {
+                    Console.Write("{0,-7}", imp[i, j]);
+                }
+                Console.WriteLine();
+            }
         }
     }
 }

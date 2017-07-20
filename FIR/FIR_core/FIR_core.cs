@@ -346,7 +346,7 @@ namespace FIR
         int FindShapeOnLine(string line, string shape, int n);
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y);
         bool IsPositionOnLine(int Start, int End, int Position);
-        bool IsOnBoard(int X, int Y, int size);        
+        bool IsOnBoard(int X, int Y, int size);
     }
 
     public class FIR_core_V2
@@ -401,6 +401,7 @@ namespace FIR
         const int ScoreDieFour = -5;
         const int ScoreDieThree = -5;
         const int ScoreDieTwo = -5;
+        const int ScoreMin = -1000;
 
         const int DirectionLine0 = 1;
         const int DirectionLine45 = 2;
@@ -410,6 +411,7 @@ namespace FIR
         string[,] ShapeBase = new string[20, 20];
         int[] ScoreShape = new int[20];
         int[] ShapeBaseLength = new int[20];
+        int[,] imp_board = new int[SIZE + 1, SIZE + 1];
         #endregion
 
         public FIR_core_V2()
@@ -418,6 +420,7 @@ namespace FIR
             #region const
             int tmp;
             string tmps;
+            int half_size;
             for (i = 0; i <= 19; i++)
             {
                 for (j = 0; j <= 19; j++)
@@ -492,17 +495,29 @@ namespace FIR
             ScoreShape[ShapeDieFour] = -5;
             ScoreShape[ShapeDieThree] = -5;
             ScoreShape[ShapeDieTwo] = -5;
+
+            half_size = (SIZE % 2 == 1) ? (SIZE + 1) / 2 : SIZE / 2;
+            for (i = 1; i <= half_size; i++)
+                for (j = 1; j <= half_size; j++)
+                    imp_board[i, j] = ((i < j) ? i : j) - 1;
+            for (i = 1; i <= half_size; i++)
+                for (j = half_size + 1; j <= SIZE; j++)
+                    imp_board[i, j] = imp_board[i, SIZE + 1 - j];
+            for (i = half_size + 1; i <= SIZE; i++)
+                for (j = 1; j <= SIZE; j++)
+                    imp_board[i, j] = imp_board[SIZE + 1 - i, j];
             #endregion
         }
 
-        static void ChangeBoard(int[,] board)
+        public static int[,] ChangeBoard(int[,] board)
         {
             int i, j;
             for (i = 1; i <= SIZE; i++)
                 for (j = 1; j <= SIZE; j++)
                     if (board[i, j] == 1) board[i, j] = 2; else if (board[i, j] == 2) board[i, j] = 1;
+            return board;
         }
-        static bool IsOnBoard(int X, int Y, int size)
+        public static bool IsOnBoard(int X, int Y, int size)
         {
             if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
         }
@@ -578,7 +593,7 @@ namespace FIR
             int i, s = 0;
             for (i = 1; i <= 4; i++)
                 if (a[i] == SleepThree) s++;
-            if (s == 1) return true; else return false;                     
+            if (s == 1) return true; else return false;
         }
         bool IsShapeLiveTwoSleepTwo(int[] a)
         {
@@ -673,7 +688,7 @@ namespace FIR
             StepY = (EndY - StartY > 0) ? 1 : (EndY - StartY < 0) ? -1 : 0;
             EndX += StepX;
             EndY += StepY;
-            for (i = StartX, j = StartY; (i != EndX || j!=EndY) ; i += StepX, j += StepY)
+            for (i = StartX, j = StartY; (i != EndX || j != EndY); i += StepX, j += StepY)
             {
                 s += board[i, j];
             }
@@ -750,7 +765,7 @@ namespace FIR
         public int GetAllShape(int[,] board, int X, int Y)
         {
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
-            int[] shape=new int[5];
+            int[] shape = new int[5];
             tmp_board = board;
             shape[1] = GetLineShape(tmp_board, X, Y, DirectionLine0);
             shape[2] = GetLineShape(tmp_board, X, Y, DirectionLine45);
@@ -774,7 +789,44 @@ namespace FIR
             if (IsShapeDieTwo(shape)) return DieTwo;
             return NoShape;
         }
-
+        public int[,] GetAllImp(int[,] board)
+        {
+            int i, j;
+            int[,] board1, board2;
+            int x, y;
+            int[,] imp_board = new int[SIZE + 1, SIZE + 1];
+            for (i = 1; i <= SIZE; i++)
+            {
+                for (j = 1; j <= SIZE; j++)
+                {
+                    if (board[i, j] == 0)
+                    {
+                        board1 = board;
+                        board2 = FIR_core_V2.ChangeBoard(board);
+                        board1[i, j] = 1;
+                        board2[i, j] = 1;
+                        x = GetAllShape(board1, i, j);
+                        y = GetAllShape(board2, i, j);
+                        imp_board[i, j] = x + y;
+                    }
+                    else
+                    {
+                        imp_board[i, j] = ScoreMin;
+                    }
+                }
+            }
+            return imp_board;
+        }
+        public int[,] GetAllImpWithBoard(int[,] board)
+        {
+            int[,] tmp_board;
+            int i, j;
+            tmp_board = GetAllImp(board);
+            for (i = 1; i <= SIZE; i++)
+                for (j = 1; j <= SIZE; j++)
+                    if (tmp_board[i, j] != ScoreMin) tmp_board[i, j] += imp_board[i, j];
+            return tmp_board;
+        }
     }
 }
 
