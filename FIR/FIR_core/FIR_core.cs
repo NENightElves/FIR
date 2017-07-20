@@ -871,7 +871,7 @@ namespace FIR
 
 
 
-    public class FIR_user_V2:FIR_core_V2
+    public class FIR_user_V2 : FIR_core_V2
     {
         public int[,] board = new int[16, 16];
         int[,] imp_board = new int[16, 16];
@@ -880,7 +880,27 @@ namespace FIR
         {
             imp_board = GetAllImpWithBoard(board);
             sort = SortBoard(imp_board);
+            print_boardimp(imp_board);
+            Console.WriteLine(sort[1].X * 100 + sort[1].Y);
             return sort[1].X * 100 + sort[1].Y;
+        }
+        void print_boardimp(int[,] boardimp)
+        {
+            int i, j;
+            for (j = 0; j <= 15; j++)
+            {
+                Console.Write("[{0,-2}]   ", j);
+            }
+            Console.WriteLine();
+            for (i = 1; i <= 15; i++)
+            {
+                Console.Write("[{0,-2}]   ", i);
+                for (j = 1; j <= 15; j++)
+                {
+                    Console.Write("{0,-7}", boardimp[i, j]);
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
