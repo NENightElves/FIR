@@ -414,6 +414,13 @@ namespace FIR
         int[,] imp_board = new int[SIZE + 1, SIZE + 1];
         #endregion
 
+        public struct StructSortBoard
+        {
+            public int num;
+            public int X;
+            public int Y;
+        }
+
         public FIR_core_V2()
         {
             int i, j, k;
@@ -835,6 +842,45 @@ namespace FIR
                 for (j = 1; j <= SIZE; j++)
                     if (tmp_board[i, j] != ScoreMin) tmp_board[i, j] += imp_board[i, j];
             return tmp_board;
+        }
+        public StructSortBoard[] SortBoard(int[,] imp_board)
+        {
+            int i, j, k;
+            StructSortBoard[] sort_imp_board = new StructSortBoard[(SIZE + 1) * (SIZE + 1)];
+            StructSortBoard tmp;
+            k = 0;
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                {
+                    k++;
+                    sort_imp_board[k].num = imp_board[i, j];
+                    sort_imp_board[k].X = i;
+                    sort_imp_board[k].Y = j;
+                }
+            for (i = 1; i <= SIZE * SIZE - 1; i++)
+                for (j = i + 1; j <= SIZE * SIZE; j++)
+                    if (sort_imp_board[i].num < sort_imp_board[j].num)
+                    {
+                        tmp = sort_imp_board[i];
+                        sort_imp_board[i] = sort_imp_board[j];
+                        sort_imp_board[j] = tmp;
+                    }
+            return sort_imp_board;
+        }
+    }
+
+
+
+    public class FIR_user_V2:FIR_core_V2
+    {
+        int[,] board = new int[16, 16];
+        int[,] imp_board = new int[16, 16];
+        StructSortBoard[] sort = new StructSortBoard[300];
+        public int FindTarget()
+        {
+            imp_board = GetAllImpWithBoard(board);
+            sort = SortBoard(imp_board);
+            return sort[1].X * 10 + sort[1].Y;
         }
     }
 }
