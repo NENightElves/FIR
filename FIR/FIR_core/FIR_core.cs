@@ -873,14 +873,14 @@ namespace FIR
 
     public class FIR_user_V2:FIR_core_V2
     {
-        int[,] board = new int[16, 16];
+        public int[,] board = new int[16, 16];
         int[,] imp_board = new int[16, 16];
         StructSortBoard[] sort = new StructSortBoard[300];
         public int FindTarget()
         {
             imp_board = GetAllImpWithBoard(board);
             sort = SortBoard(imp_board);
-            return sort[1].X * 10 + sort[1].Y;
+            return sort[1].X * 100 + sort[1].Y;
         }
     }
 }

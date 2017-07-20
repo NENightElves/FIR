@@ -77,7 +77,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::FIR.Properties.Resources.FIRBOARD;
+            this.BackgroundImage = global::FIR_V2.Properties.Resources.FIRBOARD;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(398, 437);
             this.Controls.Add(this.textBox1);
