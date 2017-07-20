@@ -713,15 +713,10 @@ namespace FIR
         int PositionOnLine(int StartX, int StartY, int EndX, int EndY, int X, int Y)
         {
             int result;
-            result = 0;
-            if (EndX - StartX != 0)
-            {
-                result = X;
-            }
-            else
-            {
-                result = Y;
-            }
+            if (EndX - StartX == 0) return Y;
+            if (EndY - StartY == 0) return X;
+            result = (EndX - StartX > 0) ? 1 : -1;
+            result = (X - StartX) / result + 1;
             return result;
         }
         int FindShapeOnLine(string line, string shape, int n)

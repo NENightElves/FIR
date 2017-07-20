@@ -69,9 +69,9 @@ namespace UnitTestProject1
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                     a[i, j] = 0;
-            a[2, 2] = 1; a[3, 3] = 1; a[4, 4] = 1; a[5, 5] = 1; a[6, 6] = 0;
-            a[2, 3] = 1; a[2, 4] = 1; a[2, 5] = 2;
-
+            a[9, 6] = 1;a[10, 7] = 1;a[11, 8] = 1;
+            a[12, 9] = 1;
+            i = xxx.GetAllShape(a, 12, 9);
             imp = xxx.GetAllImpWithBoard(a);
 
             for (j = 0; j <= 15; j++)
