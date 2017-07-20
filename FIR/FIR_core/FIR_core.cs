@@ -512,14 +512,23 @@ namespace FIR
         public static int[,] ChangeBoard(int[,] board)
         {
             int i, j;
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            CopyArraySIZE(board, tmp_board);
             for (i = 1; i <= SIZE; i++)
                 for (j = 1; j <= SIZE; j++)
-                    if (board[i, j] == 1) board[i, j] = 2; else if (board[i, j] == 2) board[i, j] = 1;
-            return board;
+                    if (tmp_board[i, j] == 1) tmp_board[i, j] = 2; else if (tmp_board[i, j] == 2) tmp_board[i, j] = 1;
+            return tmp_board;
         }
         public static bool IsOnBoard(int X, int Y, int size)
         {
             if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
+        }
+        public static void CopyArraySIZE(int[,] a, int[,] b)
+        {
+            int i, j;
+            for (i = 1; i <= SIZE; i++)
+                for (j = 1; j <= SIZE; j++)
+                    b[i, j] = a[i, j];
         }
 
         #region ShapeJudgment
@@ -714,7 +723,7 @@ namespace FIR
             string tmp;
             for (i = n; i <= line.Length - shape.Length + 1; i++)
             {
-                tmp = line.Substring(n - 1, shape.Length);
+                tmp = line.Substring(i - 1, shape.Length);
                 if (tmp == shape) return i;
             }
             return 0;
@@ -736,7 +745,7 @@ namespace FIR
             end_x = X;
             end_y = Y;
 
-            tmp_board = board;
+            CopyArraySIZE(board, tmp_board);
             GetLineStart(ref start_x, ref start_y, Direction);
             GetLineEnd(ref end_x, ref end_y, Direction);
             s = GenerateLine(tmp_board, start_x, start_y, end_x, end_y);
@@ -766,7 +775,7 @@ namespace FIR
         {
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int[] shape = new int[5];
-            tmp_board = board;
+            CopyArraySIZE(board, tmp_board);
             shape[1] = GetLineShape(tmp_board, X, Y, DirectionLine0);
             shape[2] = GetLineShape(tmp_board, X, Y, DirectionLine45);
             shape[3] = GetLineShape(tmp_board, X, Y, DirectionLine90);
@@ -792,7 +801,7 @@ namespace FIR
         public int[,] GetAllImp(int[,] board)
         {
             int i, j;
-            int[,] board1, board2;
+            int[,] board1 = new int[SIZE + 1, SIZE + 1], board2 = new int[SIZE + 1, SIZE + 1];
             int x, y;
             int[,] imp_board = new int[SIZE + 1, SIZE + 1];
             for (i = 1; i <= SIZE; i++)
@@ -801,13 +810,13 @@ namespace FIR
                 {
                     if (board[i, j] == 0)
                     {
-                        board1 = board;
+                        CopyArraySIZE(board, board1);
                         board2 = FIR_core_V2.ChangeBoard(board);
                         board1[i, j] = 1;
                         board2[i, j] = 1;
                         x = GetAllShape(board1, i, j);
                         y = GetAllShape(board2, i, j);
-                        imp_board[i, j] = x + y;
+                        imp_board[i, j] = ScoreShape[x] + ScoreShape[y];
                     }
                     else
                     {
@@ -819,7 +828,7 @@ namespace FIR
         }
         public int[,] GetAllImpWithBoard(int[,] board)
         {
-            int[,] tmp_board;
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int i, j;
             tmp_board = GetAllImp(board);
             for (i = 1; i <= SIZE; i++)

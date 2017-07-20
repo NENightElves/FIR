@@ -71,7 +71,9 @@ namespace UnitTestProject1
                     a[i, j] = 0;
             a[2, 2] = 1; a[3, 3] = 1; a[4, 4] = 1; a[5, 5] = 1; a[6, 6] = 0;
             a[2, 3] = 1; a[2, 4] = 1; a[2, 5] = 2;
+
             imp = xxx.GetAllImpWithBoard(a);
+
             for (j = 0; j <= 15; j++)
             {
                 Console.Write("[{0,-2}]   ", j);
