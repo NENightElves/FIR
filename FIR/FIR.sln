@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIR_test", "FIR_test\FIR_test.csproj", "{DD12AE25-BA81-4E04-BA4C-19FEBF3FC096}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIR_V2", "FIR_V2\FIR_V2.csproj", "{0FB3DA1C-DA37-4E39-833A-9FD095C8D492}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DD12AE25-BA81-4E04-BA4C-19FEBF3FC096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD12AE25-BA81-4E04-BA4C-19FEBF3FC096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD12AE25-BA81-4E04-BA4C-19FEBF3FC096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB3DA1C-DA37-4E39-833A-9FD095C8D492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB3DA1C-DA37-4E39-833A-9FD095C8D492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB3DA1C-DA37-4E39-833A-9FD095C8D492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB3DA1C-DA37-4E39-833A-9FD095C8D492}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
