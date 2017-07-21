@@ -401,7 +401,7 @@ namespace FIR
         const int ScoreDieFour = -5;
         const int ScoreDieThree = -5;
         const int ScoreDieTwo = -5;
-        const int ScoreMin = -1000;
+        const int ScoreMin = -10000000;
 
         const int DirectionLine0 = 1;
         const int DirectionLine45 = 2;
@@ -997,7 +997,7 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour]) { max = 1000000; depth_max = depth_count; break; }
+                        if (GetImpX(board,sort_imp_board[i].X,sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = 1000000; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
@@ -1019,7 +1019,7 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour]) { min = -1000000; depth_max = depth_count; break; }
+                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = -1000000; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
