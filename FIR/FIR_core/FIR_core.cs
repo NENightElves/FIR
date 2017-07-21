@@ -971,6 +971,7 @@ namespace FIR
                 //test
                 Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
                 //test
+                
                 CopyArray(board, tmp_board);
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
@@ -985,6 +986,11 @@ namespace FIR
                         sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
                         sort_imp_alpha_beta_search[j] = tmp;
                     }
+            //test
+            for(i=1;i<=WIDTH;i++) Console.WriteLine($"{sort_imp_alpha_beta_search[i].X},{sort_imp_alpha_beta_search[i].Y}  {sort_imp_alpha_beta_search[i].imp}");
+            Console.WriteLine("\r\n");
+            //test
+
             return sort_imp_alpha_beta_search[1].X * 100 + sort_imp_alpha_beta_search[1].Y;
         }
     }
