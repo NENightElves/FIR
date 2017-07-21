@@ -817,6 +817,34 @@ namespace FIR
             if (IsShapeDieTwo(shape)) return ShapeDieTwo;
             return NoShape;
         }
+        public int GetImpX(int[,] board, int X, int Y)
+        {
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            if (board[X, Y] == 0)
+            {
+                CopyArray(board, tmp_board);
+                tmp_board[X, Y] = 1;
+                return ScoreShape[GetAllShape(tmp_board, X, Y)];
+            }
+            else
+            {
+                return ScoreMin;
+            }
+        }
+        public int GetImpY(int[,] board, int X, int Y)
+        {
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            if (board[X, Y] == 0)
+            {
+                tmp_board = ChangeBoard(board);
+                tmp_board[X, Y] = 1;
+                return ScoreShape[GetAllShape(tmp_board, X, Y)];
+            }
+            else
+            {
+                return ScoreMin;
+            }
+        }
         public int[,] GetAllImpX(int[,] board)
         {
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
