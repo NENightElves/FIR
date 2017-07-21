@@ -1050,6 +1050,14 @@ namespace FIR
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
+                //特殊情况不搜索
+                if (GetImpX(board, sort_imp_alpha_beta_search[i].X, sort_imp_alpha_beta_search[i].Y) >= ScoreShape[ShapeLiveFour])
+                {
+                    sort_imp_alpha_beta_search[i].imp = 1000000;
+                    sort_imp_alpha_beta_search[i].max_depth = 0;
+                    break;
+                }
+                //特殊情况不搜索
                 sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1, ref sort_imp_alpha_beta_search[i].max_depth);
             }
             for (i = 1; i <= WIDTH - 1; i++)
