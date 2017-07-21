@@ -408,11 +408,14 @@ namespace FIR
         const int DirectionLine90 = 3;
         const int DirectionLine135 = 4;
 
+        const int AlphaBetaMax = 1000000;
+        const int AlpahBetaMin = -1000000;
+
         string[,] ShapeBase = new string[20, 20];
         int[] ScoreShape = new int[20];
         int[] ShapeBaseLength = new int[20];
         int[,] imp_board = new int[SIZE + 1, SIZE + 1];
-        int WIDTH, DEPTH;
+        int WIDTH, DEPTH;        
         #endregion
 
         public struct StructSortBoard
@@ -997,7 +1000,7 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (GetImpX(board,sort_imp_board[i].X,sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = 1000000; depth_max = depth_count; break; }
+                        if (GetImpX(board,sort_imp_board[i].X,sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
@@ -1019,7 +1022,7 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = -1000000; depth_max = depth_count; break; }
+                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlpahBetaMin; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
@@ -1050,15 +1053,13 @@ namespace FIR
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
-                //特殊情况不搜索
+                sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1, ref sort_imp_alpha_beta_search[i].max_depth);
+                //特殊情况加权重
                 if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour])
                 {
-                    sort_imp_alpha_beta_search[i].imp = 1000000;
-                    sort_imp_alpha_beta_search[i].max_depth = 0;
-                    break;
+                    sort_imp_alpha_beta_search[i].imp += AlphaBetaMax;
                 }
-                //特殊情况不搜索
-                sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1, ref sort_imp_alpha_beta_search[i].max_depth);
+                //特殊情况加权重
             }
             for (i = 1; i <= WIDTH - 1; i++)
                 for (j = i + 1; j <= WIDTH; j++)
