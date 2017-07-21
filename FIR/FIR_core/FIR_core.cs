@@ -804,16 +804,16 @@ namespace FIR
             if (IsShapeRushFourLiveThree(shape)) return ShapeRushFourLiveThree;
             if (IsShapeDoubleLiveThree(shape)) return ShapeDoubleLiveThree;
             if (IsShapeLiveThreeSleepThree(shape)) return ShapeLiveThreeSleepThree;
-            if (IsShapeRushFour(shape)) return RushFour;
+            if (IsShapeRushFour(shape)) return ShapeRushFour;
             if (IsShapeLiveThree(shape)) return ShapeLiveThree;
             if (IsShapeDoubleLiveTwo(shape)) return ShapeDoubleLiveTwo;
             if (IsShapeSleepThree(shape)) return ShapeSleepThree;
             if (IsShapeLiveTwoSleepTwo(shape)) return ShapeLiveTwoSleepTwo;
             if (IsShapeLiveTwo(shape)) return ShapeLiveTwo;
             if (IsShapeSleepTwo(shape)) return ShapeSleepTwo;
-            if (IsShapeDieFour(shape)) return DieFour;
-            if (IsShapeDieThree(shape)) return DieThree;
-            if (IsShapeDieTwo(shape)) return DieTwo;
+            if (IsShapeDieFour(shape)) return ShapeDieFour;
+            if (IsShapeDieThree(shape)) return ShapeDieThree;
+            if (IsShapeDieTwo(shape)) return ShapeDieTwo;
             return NoShape;
         }
         public int[,] GetAllImp(int[,] board)
@@ -878,14 +878,26 @@ namespace FIR
                     }
             return sort_imp_board;
         }
-        public int ScoreOfBoard(int[,] board)
+        public int ScoreOfBoardForComputer(int[,] board)
         {
-            //需要重写
+            int x, y;
+            int result;
             int[,] imp_board;
+            int[,] board1 = new int[SIZE + 1, SIZE + 1], board2 = new int[SIZE + 1, SIZE + 1];
             StructSortBoard[] sort_imp_board;
             imp_board = GetAllImpWithBoard(board);
             sort_imp_board = SortBoardImp(imp_board);
-            return sort_imp_board[1].num;
+            CopyArray(board, board1);
+            board2 = FIR_core_V2.ChangeBoard(board);
+            board1[sort_imp_board[1].X, sort_imp_board[1].Y] = 1;
+            board2[sort_imp_board[1].X, sort_imp_board[1].Y] = 1;
+            x = GetAllShape(board1, sort_imp_board[1].X, sort_imp_board[1].Y);
+            y = GetAllShape(board2, sort_imp_board[1].X, sort_imp_board[1].Y);
+            result = ScoreShape[x] - ScoreShape[y];
+            //test
+            Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
+            //test
+            return result;
         }
         public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count)
         {
@@ -896,7 +908,11 @@ namespace FIR
             StructSortBoard[] sort_imp_board;
             if (depth_count == DEPTH)
             {
-                return ScoreOfBoard(board);
+                //test
+                for (j = 1; j <= depth_count; j++) Console.Write("\t");
+                //test
+
+                return ScoreOfBoardForComputer(board);
             }
             else
             {
@@ -907,6 +923,11 @@ namespace FIR
                     sort_imp_board = SortBoardImp(imp_board);
                     for (i = 1; i <= WIDTH; i++)
                     {
+                        //test
+                        for (j = 1; j <= depth_count;j++) Console.Write("\t");
+                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
+                        //test
+
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                         value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
@@ -921,6 +942,11 @@ namespace FIR
                     sort_imp_board = SortBoardImp(imp_board);
                     for (i = 1; i <= WIDTH; i++)
                     {
+                        //test
+                        for (j = 1; j <= depth_count; j++) Console.Write("\t");
+                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
+                        //test
+
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
                         value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
@@ -942,6 +968,9 @@ namespace FIR
             sort_imp_board = SortBoardImp(imp_board);
             for (i = 1; i <= WIDTH; i++)
             {
+                //test
+                Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
+                //test
                 CopyArray(board, tmp_board);
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;

@@ -69,9 +69,20 @@ namespace UnitTestProject1
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                     a[i, j] = 0;
-            a[9, 6] = 1;a[10, 7] = 1;a[11, 8] = 1;
-            a[12, 9] = 1;
-            i = xxx.GetAllShape(a, 12, 9);
+            a[6, 8] = 1;
+            a[7, 7] = 1;
+            a[7, 8] = 2;
+            a[8, 6] = 2;
+            a[8, 7] = 1;
+            a[8, 9] = 2;
+            a[9, 6] = 2;
+            a[9, 7] = 2;
+            a[10, 6] = 2;
+            a[10, 8] = 1;
+            a[11, 5] = 1;
+            a = FIR_core_V2.ChangeBoard(a);
+            a[12, 6] = 1;
+            i = xxx.GetAllShape(a, 12, 6);
             imp = xxx.GetAllImpWithBoard(a);
 
             for (j = 0; j <= 15; j++)
