@@ -22,6 +22,8 @@ namespace FIR
         const int BUTTON_DISTANCE_Y = 25;
         const int BOARD_SIZE_X = 15;
         const int BOARD_SIZE_Y = 15;
+        const int width = 5;
+        const int depth = 2;
 
         PictureBox[,] btn = new PictureBox[20, 20];
         int mode = 2;
@@ -137,7 +139,7 @@ namespace FIR
             textBox1.Visible = false;
             for (i = 1; i <= 299; i++)
             {
-                step_record[i] = new FIR_user_V2();
+                step_record[i] = new FIR_user_V2(width, depth);
             }
             for (i = 0; i <= BOARD_SIZE_X + 1; i++)
                 for (j = 0; j <= BOARD_SIZE_Y + 1; j++)
@@ -181,7 +183,7 @@ namespace FIR
                 player_color = computer_color;
                 computer_color = tmp_color;
                 Random ran = new Random();
-                btn[ran.Next(7, 10), ran.Next(7, 10)].Image = computer_color;
+                btn[8,8].Image = computer_color;
                 n++;
                 IsEnd = false;
                 copy_data();
@@ -195,7 +197,7 @@ namespace FIR
                 n = 0;
                 for (i = 1; i <= 299; i++)
                 {
-                    step_record[i] = new FIR_user_V2();
+                    step_record[i] = new FIR_user_V2(width, depth);
                 }
                 for (i = 1; i <= BOARD_SIZE_X; i++)
                     for (j = 1; j <= BOARD_SIZE_Y; j++)
@@ -210,7 +212,7 @@ namespace FIR
         private void button2_Click(object sender, EventArgs e)
         {
             int i, j;
-            FIR_user_V2 xxx = new FIR_user_V2();
+            FIR_user_V2 xxx = new FIR_user_V2(width, depth);
             for (i = 1; i <= 15; i++)
                 for (j = 1; j <= 15; j++)
                 {

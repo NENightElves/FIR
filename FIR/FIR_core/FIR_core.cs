@@ -412,6 +412,7 @@ namespace FIR
         int[] ScoreShape = new int[20];
         int[] ShapeBaseLength = new int[20];
         int[,] imp_board = new int[SIZE + 1, SIZE + 1];
+        int WIDTH, DEPTH;
         #endregion
 
         public struct StructSortBoard
@@ -420,14 +421,23 @@ namespace FIR
             public int X;
             public int Y;
         }
-
-        public FIR_core_V2()
+        public struct StructAlphaBetaSearch
         {
+            public int imp;
+            public int X;
+            public int Y;
+        }
+
+        public FIR_core_V2(int width, int depth)
+        {
+            //depth是偶数
             int i, j, k;
             #region const
             int tmp;
             string tmps;
             int half_size;
+            WIDTH = width;
+            DEPTH = depth;
             for (i = 0; i <= 19; i++)
             {
                 for (j = 0; j <= 19; j++)
@@ -520,7 +530,7 @@ namespace FIR
         {
             int i, j;
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
-            CopyArraySIZE(board, tmp_board);
+            CopyArray(board, tmp_board);
             for (i = 1; i <= SIZE; i++)
                 for (j = 1; j <= SIZE; j++)
                     if (tmp_board[i, j] == 1) tmp_board[i, j] = 2; else if (tmp_board[i, j] == 2) tmp_board[i, j] = 1;
@@ -530,12 +540,18 @@ namespace FIR
         {
             if ((X >= 1) && (X <= size) && (Y >= 1) && (Y <= size)) return true; else return false;
         }
-        public static void CopyArraySIZE(int[,] a, int[,] b)
+        public static void CopyArray(int[,] a, int[,] b)
         {
             int i, j;
             for (i = 1; i <= SIZE; i++)
                 for (j = 1; j <= SIZE; j++)
                     b[i, j] = a[i, j];
+        }
+        public static void CopyArray(StructSortBoard[] a, StructSortBoard[] b)
+        {
+            int i;
+            for (i = 1; i <= SIZE * SIZE; i++)
+                b[i] = a[i];
         }
 
         #region ShapeJudgment
@@ -747,7 +763,7 @@ namespace FIR
             end_x = X;
             end_y = Y;
 
-            CopyArraySIZE(board, tmp_board);
+            CopyArray(board, tmp_board);
             GetLineStart(ref start_x, ref start_y, Direction);
             GetLineEnd(ref end_x, ref end_y, Direction);
             s = GenerateLine(tmp_board, start_x, start_y, end_x, end_y);
@@ -777,7 +793,7 @@ namespace FIR
         {
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int[] shape = new int[5];
-            CopyArraySIZE(board, tmp_board);
+            CopyArray(board, tmp_board);
             shape[1] = GetLineShape(tmp_board, X, Y, DirectionLine0);
             shape[2] = GetLineShape(tmp_board, X, Y, DirectionLine45);
             shape[3] = GetLineShape(tmp_board, X, Y, DirectionLine90);
@@ -812,7 +828,7 @@ namespace FIR
                 {
                     if (board[i, j] == 0)
                     {
-                        CopyArraySIZE(board, board1);
+                        CopyArray(board, board1);
                         board2 = FIR_core_V2.ChangeBoard(board);
                         board1[i, j] = 1;
                         board2[i, j] = 1;
@@ -838,7 +854,7 @@ namespace FIR
                     if (tmp_board[i, j] != ScoreMin) tmp_board[i, j] += imp_board[i, j];
             return tmp_board;
         }
-        public StructSortBoard[] SortBoard(int[,] imp_board)
+        public StructSortBoard[] SortBoardImp(int[,] imp_board)
         {
             int i, j, k;
             StructSortBoard[] sort_imp_board = new StructSortBoard[(SIZE + 1) * (SIZE + 1)];
@@ -862,6 +878,86 @@ namespace FIR
                     }
             return sort_imp_board;
         }
+        public int ScoreOfBoard(int[,] board)
+        {
+            //需要重写
+            int[,] imp_board;
+            StructSortBoard[] sort_imp_board;
+            imp_board = GetAllImpWithBoard(board);
+            sort_imp_board = SortBoardImp(imp_board);
+            return sort_imp_board[1].num;
+        }
+        public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count)
+        {
+            int i, j;
+            int[,] imp_board;
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            int value = 0;
+            StructSortBoard[] sort_imp_board;
+            if (depth_count == DEPTH)
+            {
+                return ScoreOfBoard(board);
+            }
+            else
+            {
+                if (depth_count % 2 == 0)
+                {
+                    //max
+                    imp_board = GetAllImpWithBoard(board);
+                    sort_imp_board = SortBoardImp(imp_board);
+                    for (i = 1; i <= WIDTH; i++)
+                    {
+                        CopyArray(board, tmp_board);
+                        tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
+                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
+                        if (value > max) max = value; else break;
+                    }
+                    return max;
+                }
+                else
+                {
+                    //min
+                    imp_board = GetAllImpWithBoard(ChangeBoard(board));
+                    sort_imp_board = SortBoardImp(imp_board);
+                    for (i = 1; i <= WIDTH; i++)
+                    {
+                        CopyArray(board, tmp_board);
+                        tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
+                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
+                        if (value < min) min = value; else break;
+                    }
+                    return min;
+                }
+            }
+        }
+        public int CallAlphaBataSearch(int[,] board)
+        {
+            int i, j;
+            int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            int[,] imp_board;
+            StructSortBoard[] sort_imp_board;
+            StructAlphaBetaSearch[] sort_imp_alpha_beta_search = new StructAlphaBetaSearch[WIDTH + 1];
+            StructAlphaBetaSearch tmp;
+            imp_board = GetAllImpWithBoard(board);
+            sort_imp_board = SortBoardImp(imp_board);
+            for (i = 1; i <= WIDTH; i++)
+            {
+                CopyArray(board, tmp_board);
+                tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
+                sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
+                sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
+                sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1);
+            }
+            for (i = 1; i <= WIDTH - 1; i++)
+                for (j = i + 1; j <= WIDTH; j++)
+                    if (sort_imp_alpha_beta_search[i].imp < sort_imp_alpha_beta_search[j].imp)
+                    {
+                        tmp = sort_imp_alpha_beta_search[i];
+                        sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
+                        sort_imp_alpha_beta_search[j] = tmp;
+                    }
+            return sort_imp_alpha_beta_search[1].X * 100 + sort_imp_alpha_beta_search[1].Y;
+        }
     }
 
 
@@ -871,13 +967,15 @@ namespace FIR
         public int[,] board = new int[16, 16];
         int[,] imp_board = new int[16, 16];
         StructSortBoard[] sort = new StructSortBoard[300];
+
+        public FIR_user_V2(int width, int depth) : base(width, depth) {; }
         public int FindTarget()
         {
-            imp_board = GetAllImpWithBoard(board);
-            sort = SortBoard(imp_board);
-            print_boardimp(imp_board);
-            Console.WriteLine(sort[1].X * 100 + sort[1].Y);
-            return sort[1].X * 100 + sort[1].Y;
+            //imp_board = GetAllImpWithBoard(board);
+            //sort = SortBoardImp(imp_board);
+            //print_boardimp(imp_board);
+            //Console.WriteLine(sort[1].X * 100 + sort[1].Y);
+            return CallAlphaBataSearch(board);
         }
         void print_boardimp(int[,] boardimp)
         {
