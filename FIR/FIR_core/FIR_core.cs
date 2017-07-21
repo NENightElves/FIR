@@ -1051,7 +1051,7 @@ namespace FIR
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
                 //特殊情况不搜索
-                if (GetImpX(board, sort_imp_alpha_beta_search[i].X, sort_imp_alpha_beta_search[i].Y) >= ScoreShape[ShapeLiveFour])
+                if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour])
                 {
                     sort_imp_alpha_beta_search[i].imp = 1000000;
                     sort_imp_alpha_beta_search[i].max_depth = 0;
