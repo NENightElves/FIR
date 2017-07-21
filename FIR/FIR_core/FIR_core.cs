@@ -426,6 +426,7 @@ namespace FIR
             public int imp;
             public int X;
             public int Y;
+            public int max_depth;
         }
 
         public FIR_core_V2(int width, int depth)
@@ -899,7 +900,7 @@ namespace FIR
             //test
             return result;
         }
-        public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count)
+        public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count, ref int depth_max)
         {
             int i, j;
             int[,] imp_board;
@@ -912,6 +913,7 @@ namespace FIR
                 for (j = 1; j <= depth_count; j++) Console.Write("\t");
                 //test
 
+                depth_max = DEPTH;
                 return ScoreOfBoardForComputer(board);
             }
             else
@@ -928,9 +930,12 @@ namespace FIR
                         Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
                         //test
 
+                        //特殊情况直接返回
+                        if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour]) { max = 1000000; depth_max = depth_count; break; }
+                        //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
-                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
+                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1, ref depth_max);
                         if (value > max) max = value; else break;
                     }
                     return max;
@@ -947,9 +952,12 @@ namespace FIR
                         Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
                         //test
 
+                        //特殊情况直接返回
+                        if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour]) { min = -1000000; depth_max = depth_count; break; }
+                        //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
-                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1);
+                        value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1, ref depth_max);
                         if (value < min) min = value; else break;
                     }
                     return min;
@@ -976,7 +984,7 @@ namespace FIR
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
-                sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1);
+                sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1, ref sort_imp_alpha_beta_search[i].max_depth);
             }
             for (i = 1; i <= WIDTH - 1; i++)
                 for (j = i + 1; j <= WIDTH; j++)
