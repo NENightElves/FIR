@@ -415,7 +415,7 @@ namespace FIR
         int[] ScoreShape = new int[20];
         int[] ShapeBaseLength = new int[20];
         int[,] imp_board = new int[SIZE + 1, SIZE + 1];
-        int WIDTH, DEPTH;        
+        int WIDTH, DEPTH;
         #endregion
 
         public struct StructSortBoard
@@ -1000,7 +1000,7 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (GetImpX(board,sort_imp_board[i].X,sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
+                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
                         if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlpahBetaMin; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
@@ -1062,6 +1062,9 @@ namespace FIR
                     sort_imp_alpha_beta_search[i].imp += AlphaBetaMax;
                 }
                 //特殊情况加权重
+                //处理相同权值
+                sort_imp_alpha_beta_search[i].imp += sort_imp_board[i].num;
+                //处理相同权值
             }
             for (i = 1; i <= WIDTH - 1; i++)
                 for (j = i + 1; j <= WIDTH; j++)
@@ -1072,7 +1075,9 @@ namespace FIR
                         sort_imp_alpha_beta_search[j] = tmp;
                     }
             //test
-            for (i = 1; i <= WIDTH; i++) Console.WriteLine($"{sort_imp_alpha_beta_search[i].X},{sort_imp_alpha_beta_search[i].Y}  {sort_imp_alpha_beta_search[i].imp}");
+            for (i = 1; i <= WIDTH; i++)
+                Console.WriteLine($"{sort_imp_alpha_beta_search[i].X},{sort_imp_alpha_beta_search[i].Y}  {sort_imp_alpha_beta_search[i].imp} " +
+                    $"{sort_imp_alpha_beta_search[i].max_depth}");
             Console.WriteLine("\r\n");
             //test
 

@@ -23,7 +23,7 @@ namespace FIR
         const int BOARD_SIZE_X = 15;
         const int BOARD_SIZE_Y = 15;
         const int width = 3;
-        const int depth = 4;
+        const int depth = 6;
 
         PictureBox[,] btn = new PictureBox[20, 20];
         int mode = 2;
@@ -183,7 +183,7 @@ namespace FIR
                 player_color = computer_color;
                 computer_color = tmp_color;
                 Random ran = new Random();
-                btn[8,8].Image = computer_color;
+                btn[8, 8].Image = computer_color;
                 n++;
                 IsEnd = false;
                 copy_data();
