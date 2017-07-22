@@ -964,9 +964,9 @@ namespace FIR
             x = GetAllShape(board1, sort_imp_board[1].X, sort_imp_board[1].Y);
             y = GetAllShape(board2, sort_imp_board[1].X, sort_imp_board[1].Y);
             result = ScoreShape[x] - ScoreShape[y];
-            //test
-            Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
-            //test
+            ////test
+            //Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
+            ////test
             return result;
         }
         public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count, ref int depth_max)
@@ -980,12 +980,11 @@ namespace FIR
             if (depth_count == DEPTH)
             {
                 //test
-                for (j = 1; j <= depth_count; j++) Console.Write("\t");
+                for (j = 1; j <= depth_count; j++) Console.Write("|");
                 //test
 
                 depth_max = DEPTH;
                 return ScoreOfBoardForComputer(board);
-
             }
             else
             {
@@ -996,11 +995,6 @@ namespace FIR
                     sort_imp_board = SortBoardImp(imp_board);
                     for (i = 1; i <= WIDTH; i++)
                     {
-                        //test
-                        for (j = 1; j <= depth_count; j++) Console.Write("\t");
-                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
-                        //test
-
                         //特殊情况直接返回
                         if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
                         //if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlpahBetaMin; depth_max = depth_count; break; }
@@ -1008,6 +1002,10 @@ namespace FIR
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                         value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1, ref depth_max);
+                        //test
+                        for (j = 1; j <= depth_count; j++) Console.Write("|");
+                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{value}】");
+                        //test
                         if (value > max) max = value; else break;
                     }
                     return max;
@@ -1020,11 +1018,6 @@ namespace FIR
                     sort_imp_board = SortBoardImp(imp_board);
                     for (i = 1; i <= WIDTH; i++)
                     {
-                        //test
-                        for (j = 1; j <= depth_count; j++) Console.Write("\t");
-                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
-                        //test
-
                         //特殊情况直接返回
                         //if (GetImpX(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlphaBetaMax; depth_max = depth_count; break; }
                         if (GetImpY(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlpahBetaMin; depth_max = depth_count; break; }
@@ -1032,6 +1025,10 @@ namespace FIR
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
                         value = AlphaBetaSearch(tmp_board, max, min, depth_count + 1, ref depth_max);
+                        //test
+                        for (j = 1; j <= depth_count; j++) Console.Write("|");
+                        Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{value}】");
+                        //test
                         if (value < min) min = value; else break;
                     }
                     return min;
@@ -1050,10 +1047,6 @@ namespace FIR
             sort_imp_board = SortBoardImp(imp_board);
             for (i = 1; i <= WIDTH; i++)
             {
-                //test
-                Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}");
-                //test
-
                 CopyArray(board, tmp_board);
                 tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
@@ -1068,6 +1061,9 @@ namespace FIR
                 //处理相同权值
                 sort_imp_alpha_beta_search[i].imp += sort_imp_board[i].num;
                 //处理相同权值
+                //test
+                Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{sort_imp_alpha_beta_search[i].imp}】");
+                //test
             }
             for (i = 1; i <= WIDTH - 1; i++)
                 for (j = i + 1; j <= WIDTH; j++)
