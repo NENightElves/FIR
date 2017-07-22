@@ -676,6 +676,17 @@ namespace FIR
         }
         #endregion
 
+        bool IsNabourhooded(int[,] board, int X, int Y)
+        {
+            ///应保证board[X,Y]为0
+            int i, j;
+            for (i = -1; i <= 1; i++)
+                for (j = -1; j <= 1; j++)
+                {
+                    if (board[X + i, Y + j] != 0) return true;
+                }
+            return false;
+        }
         void GetLineStart(ref int X, ref int Y, int Direction)
         {
             switch (Direction)
@@ -1060,6 +1071,7 @@ namespace FIR
                 {
                     sort_imp_alpha_beta_search[i].imp += AlphaBetaMax;
                 }
+                if (!IsNabourhooded(board, sort_imp_alpha_beta_search[i].X, sort_imp_alpha_beta_search[i].Y)) sort_imp_alpha_beta_search[i].imp -= 300;
                 //特殊情况加权重
                 //处理相同权值
                 sort_imp_alpha_beta_search[i].imp += sort_imp_board[i].num;
