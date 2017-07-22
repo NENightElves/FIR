@@ -22,7 +22,7 @@ namespace FIR
         const int BUTTON_DISTANCE_Y = 25;
         const int BOARD_SIZE_X = 15;
         const int BOARD_SIZE_Y = 15;
-        const int width = 5;
+        const int width = 3;
         const int depth = 4;
 
         PictureBox[,] btn = new PictureBox[20, 20];
