@@ -979,9 +979,9 @@ namespace FIR
             StructSortBoard[] sort_imp_board;
             if (depth_count == DEPTH)
             {
-                //test
-                for (j = 1; j <= depth_count; j++) Console.Write("|");
-                //test
+                ////test
+                //for (j = 1; j <= depth_count; j++) Console.Write("|");
+                ////test
 
                 depth_max = DEPTH;
                 return ScoreOfBoardForComputer(board);
