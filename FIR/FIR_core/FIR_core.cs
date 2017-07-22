@@ -408,8 +408,8 @@ namespace FIR
         const int DirectionLine90 = 3;
         const int DirectionLine135 = 4;
 
-        const int AlphaBetaMax = 1000000;
-        const int AlpahBetaMin = -1000000;
+        const int AlphaBetaMax = 10000;
+        const int AlpahBetaMin = -10000;
 
         string[,] ShapeBase = new string[20, 20];
         int[] ScoreShape = new int[20];
@@ -974,6 +974,7 @@ namespace FIR
             int i, j;
             int[,] imp_board;
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
+            int[,] ttmp_board = new int[SIZE + 1, SIZE + 1];
             int value = 0;
             StructSortBoard[] sort_imp_board;
             if (depth_count == DEPTH)
@@ -1000,8 +1001,8 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
-                        if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlpahBetaMin; depth_max = depth_count; break; }
+                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlpahBetaMin; depth_max = depth_count; break; }
+                        if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlphaBetaMax; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
@@ -1013,7 +1014,8 @@ namespace FIR
                 else
                 {
                     //min
-                    imp_board = GetAllImpWithBoard(ChangeBoard(board));
+                    ttmp_board = ChangeBoard(board);
+                    imp_board = GetAllImpWithBoard(ttmp_board);
                     sort_imp_board = SortBoardImp(imp_board);
                     for (i = 1; i <= WIDTH; i++)
                     {
@@ -1023,8 +1025,8 @@ namespace FIR
                         //test
 
                         //特殊情况直接返回
-                        if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlphaBetaMax; depth_max = depth_count; break; }
-                        if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlpahBetaMin; depth_max = depth_count; break; }
+                        if (GetImpX(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlphaBetaMax; depth_max = depth_count; break; }
+                        if (GetImpY(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlpahBetaMin; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;

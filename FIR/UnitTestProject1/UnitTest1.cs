@@ -100,5 +100,30 @@ namespace UnitTestProject1
                 Console.WriteLine();
             }
         }
+
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            FIR_core_V2 xxx = new FIR_core_V2(3, 6);
+            int[,] a = new int[16, 16];
+            int[,] imp = new int[16, 16];
+            int i, j;
+            for (i = 1; i <= 15; i++)
+                for (j = 1; j <= 15; j++)
+                    a[i, j] = 0;
+            a[6, 6] = 1;
+            a[6, 7] = 2;
+            a[6, 8] = 2;
+            a[7, 7] = 2;
+            a[7, 9] = 2;
+            a[8, 6] = 1;
+            a[8, 7] = 2;
+            a[8, 8] = 1;
+            a[9, 7] = 1;
+
+            xxx.CallAlphaBataSearch(a);
+
+        }
     }
 }
