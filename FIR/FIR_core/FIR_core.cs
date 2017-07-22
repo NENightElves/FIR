@@ -964,9 +964,9 @@ namespace FIR
             x = GetAllShape(board1, sort_imp_board[1].X, sort_imp_board[1].Y);
             y = GetAllShape(board2, sort_imp_board[1].X, sort_imp_board[1].Y);
             result = ScoreShape[x] - ScoreShape[y];
-            //test
-            Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
-            //test
+            ////test
+            //Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
+            ////test
             return result;
         }
         public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count, ref int depth_max)
@@ -977,14 +977,25 @@ namespace FIR
             int[,] ttmp_board = new int[SIZE + 1, SIZE + 1];
             int value = 0;
             StructSortBoard[] sort_imp_board;
-            if (depth_count == DEPTH)
+            if (depth_count == DEPTH - 1)
             {
-                //test
-                for (j = 1; j <= depth_count; j++) Console.Write("\t");
-                //test
+                ttmp_board = ChangeBoard(board);
+                imp_board = GetAllImpWithBoard(ttmp_board);
+                sort_imp_board = SortBoardImp(imp_board);
+                for (i = 1; i <= WIDTH; i++)
+                {
+                    tmp_board = ChangeBoard(board);
+                    tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
+                    value = ScoreOfBoardForComputer(tmp_board);
 
-                depth_max = DEPTH;
-                return ScoreOfBoardForComputer(board);
+                    //test
+                    for (j = 1; j <= depth_count; j++) Console.Write("\t");
+                    Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}  {sort_imp_board[i].num}       【{value}】");
+                    //test
+
+                    if (value < min) min = value; else break;
+                }
+                return min;
             }
             else
             {
