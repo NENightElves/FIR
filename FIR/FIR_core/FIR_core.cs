@@ -985,6 +985,7 @@ namespace FIR
 
                 depth_max = DEPTH;
                 return ScoreOfBoardForComputer(board);
+
             }
             else
             {
