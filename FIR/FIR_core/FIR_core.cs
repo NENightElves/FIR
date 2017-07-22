@@ -1052,6 +1052,9 @@ namespace FIR
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
                 sort_imp_alpha_beta_search[i].imp = AlphaBetaSearch(tmp_board, int.MinValue, int.MaxValue, 1, ref sort_imp_alpha_beta_search[i].max_depth);
+                //test
+                Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{sort_imp_alpha_beta_search[i].imp}】");
+                //test
                 //特殊情况加权重
                 if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour])
                 {
@@ -1061,9 +1064,6 @@ namespace FIR
                 //处理相同权值
                 sort_imp_alpha_beta_search[i].imp += sort_imp_board[i].num;
                 //处理相同权值
-                //test
-                Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{sort_imp_alpha_beta_search[i].imp}】");
-                //test
             }
             for (i = 1; i <= WIDTH - 1; i++)
                 for (j = i + 1; j <= WIDTH; j++)
