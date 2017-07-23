@@ -683,7 +683,8 @@ namespace FIR
             for (i = -1; i <= 1; i++)
                 for (j = -1; j <= 1; j++)
                 {
-                    if (board[X + i, Y + j] != 0) return true;
+                    if (IsOnBoard(X + i, Y + i, SIZE))
+                        if (board[X + i, Y + j] != 0) return true;
                 }
             return false;
         }
