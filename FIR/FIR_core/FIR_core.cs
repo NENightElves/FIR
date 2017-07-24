@@ -1112,6 +1112,7 @@ namespace FIR
                 {
                     sort_imp_alpha_beta_search[i].imp += AlphaBetaMax;
                 }
+                if (sort_imp_board[i].num >= 5 * ScoreShape[ShapeDoubleRushFour]) sort_imp_alpha_beta_search[i].imp += ScoreShape[ShapeFive];
                 //if (!IsNabourhooded(board, sort_imp_alpha_beta_search[i].X, sort_imp_alpha_beta_search[i].Y)) sort_imp_alpha_beta_search[i].imp -= 300;
                 //特殊情况加权重
                 //处理相同权值

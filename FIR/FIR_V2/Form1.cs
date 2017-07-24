@@ -23,8 +23,8 @@ namespace FIR
         const int BOARD_SIZE_X = 15;
         const int BOARD_SIZE_Y = 15;
         int out_width = 8;
-        const int width = 3;
-        const int depth = 6;
+        const int width = 5;
+        const int depth = 8;
         int num_thread = 8;
 
         PictureBox[,] btn = new PictureBox[20, 20];
