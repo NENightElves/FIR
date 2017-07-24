@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FIR
@@ -1090,8 +1091,9 @@ namespace FIR
                 xxx[i].index = i;
                 if (i <= NUM_THREAD)
                 {
-                    MYTHREAD[i] = new Task(() => ThreadAlphaBetaSearch(xxx[i]));
+                    MYTHREAD[i] = new Task(() => { ThreadAlphaBetaSearch(xxx[i]); });
                     MYTHREAD[i].Start();
+                    Thread.Sleep(500);
                 }
                 else
                 {
@@ -1157,7 +1159,7 @@ namespace FIR
         {
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int max, min, depth_count, index;
-            x.board = tmp_board;
+            tmp_board = x.board;
             min = x.min;
             max = x.max;
             depth_count = x.depth_count;
