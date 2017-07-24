@@ -1068,7 +1068,7 @@ namespace FIR
                 Console.WriteLine($"{sort_imp_board[i].X},{sort_imp_board[i].Y}|{sort_imp_board[i].num}|【{sort_imp_alpha_beta_search[i].imp}】");
                 //test
                 //特殊情况加权重
-                if (sort_imp_board[i].num >= ScoreShape[ShapeLiveFour])
+                if (sort_imp_board[i].num >= ScoreShape[ShapeDoubleLiveThree])
                 {
                     sort_imp_alpha_beta_search[i].imp += AlphaBetaMax;
                 }
@@ -1095,14 +1095,14 @@ namespace FIR
                         sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
                         sort_imp_alpha_beta_search[j] = tmp;
                     }
-            for (i = 1; i <= WIDTH - 1; i++)
-                for (j = i + 1; j <= WIDTH; j++)
-                    if (sort_imp_alpha_beta_search[i].max_depth < sort_imp_alpha_beta_search[j].max_depth)
-                    {
-                        tmp = sort_imp_alpha_beta_search[i];
-                        sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
-                        sort_imp_alpha_beta_search[j] = tmp;
-                    }
+            //for (i = 1; i <= WIDTH - 1; i++)
+            //    for (j = i + 1; j <= WIDTH; j++)
+            //        if (sort_imp_alpha_beta_search[i].max_depth < sort_imp_alpha_beta_search[j].max_depth)
+            //        {
+            //            tmp = sort_imp_alpha_beta_search[i];
+            //            sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
+            //            sort_imp_alpha_beta_search[j] = tmp;
+            //        }
             //test
             for (i = 1; i <= WIDTH; i++)
                 Console.WriteLine($"{sort_imp_alpha_beta_search[i].X},{sort_imp_alpha_beta_search[i].Y}  {sort_imp_alpha_beta_search[i].imp} " +
