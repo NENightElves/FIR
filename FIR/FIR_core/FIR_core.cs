@@ -1095,6 +1095,14 @@ namespace FIR
                         sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
                         sort_imp_alpha_beta_search[j] = tmp;
                     }
+            for (i = 1; i <= WIDTH - 1; i++)
+                for (j = i + 1; j <= WIDTH; j++)
+                    if (sort_imp_alpha_beta_search[i].max_depth < sort_imp_alpha_beta_search[j].max_depth)
+                    {
+                        tmp = sort_imp_alpha_beta_search[i];
+                        sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
+                        sort_imp_alpha_beta_search[j] = tmp;
+                    }
             //test
             for (i = 1; i <= WIDTH; i++)
                 Console.WriteLine($"{sort_imp_alpha_beta_search[i].X},{sort_imp_alpha_beta_search[i].Y}  {sort_imp_alpha_beta_search[i].imp} " +
