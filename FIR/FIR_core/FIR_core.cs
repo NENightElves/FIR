@@ -1078,6 +1078,14 @@ namespace FIR
                 sort_imp_alpha_beta_search[i].imp += sort_imp_board[i].num;
                 //处理相同权值
             }
+            for (i = 1; i <= WIDTH - 1; i++)
+                for (j = i + 1; j <= WIDTH; j++)
+                    if (sort_imp_alpha_beta_search[i].imp < sort_imp_alpha_beta_search[j].imp)
+                    {
+                        tmp = sort_imp_alpha_beta_search[i];
+                        sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
+                        sort_imp_alpha_beta_search[j] = tmp;
+                    }
             for (i = 1; i <= WIDTH; i++)
                 if (sort_imp_alpha_beta_search[i].max_depth != DEPTH) break;
             if (i == WIDTH + 1)
@@ -1087,14 +1095,6 @@ namespace FIR
                 //test
                 return sort_imp_board[1].X * 100 + sort_imp_board[1].Y;
             }
-            for (i = 1; i <= WIDTH - 1; i++)
-                for (j = i + 1; j <= WIDTH; j++)
-                    if (sort_imp_alpha_beta_search[i].imp < sort_imp_alpha_beta_search[j].imp)
-                    {
-                        tmp = sort_imp_alpha_beta_search[i];
-                        sort_imp_alpha_beta_search[i] = sort_imp_alpha_beta_search[j];
-                        sort_imp_alpha_beta_search[j] = tmp;
-                    }
             //for (i = 1; i <= WIDTH - 1; i++)
             //    for (j = i + 1; j <= WIDTH; j++)
             //        if (sort_imp_alpha_beta_search[i].max_depth < sort_imp_alpha_beta_search[j].max_depth)
