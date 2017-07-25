@@ -418,7 +418,7 @@ namespace FIR
         int[,] imp_board = new int[SIZE + 1, SIZE + 1];
         int OUT_WIDTH, WIDTH, DEPTH, NUM_THREAD;
         bool[] THREAD_FLAG;
-        Task[] MYTHREAD;
+        Thread[] MYTHREAD;
         #endregion
 
         public struct StructSortBoard
@@ -452,7 +452,7 @@ namespace FIR
             string tmps;
             int half_size;
             THREAD_FLAG = new bool[num_thread + 1];
-            MYTHREAD = new Task[num_thread + 1];
+            MYTHREAD = new Thread[num_thread + 1];
             OUT_WIDTH = out_width;
             WIDTH = width;
             DEPTH = depth;
@@ -1070,7 +1070,6 @@ namespace FIR
             int i, j;
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int[,] imp_board;
-            MYTHREAD = new Task[100];
             StructSortBoard[] sort_imp_board;
             StructThreadAlphaBetaSearch[] xxx = new StructThreadAlphaBetaSearch[OUT_WIDTH + 1];
             StructAlphaBetaSearch tmp;
@@ -1091,9 +1090,9 @@ namespace FIR
                 xxx[i].index = i;
                 if (i <= NUM_THREAD)
                 {
-                    MYTHREAD[i] = new Task(() => { ThreadAlphaBetaSearch(xxx[i]); });
-                    MYTHREAD[i].Start();
-                    Thread.Sleep(500);
+                    MYTHREAD[i] = new Thread(ThreadAlphaBetaSearch);
+                    MYTHREAD[i].Start(xxx[i]);
+                    //Thread.Sleep(500);
                 }
                 else
                 {
@@ -1102,7 +1101,7 @@ namespace FIR
             }
             for (i = 1; i <= NUM_THREAD; i++)
             {
-                MYTHREAD[i].Wait();
+                while (MYTHREAD[i].IsAlive == true) ;                
             }
             for (i = 1; i <= OUT_WIDTH; i++)
             {
@@ -1155,10 +1154,12 @@ namespace FIR
 
             return sort_imp_alpha_beta_search[1].X * 100 + sort_imp_alpha_beta_search[1].Y;
         }
-        public void ThreadAlphaBetaSearch(StructThreadAlphaBetaSearch x)
+        public void ThreadAlphaBetaSearch(object _x)
         {
+            StructThreadAlphaBetaSearch x;
             int[,] tmp_board = new int[SIZE + 1, SIZE + 1];
             int max, min, depth_count, index;
+            x = (StructThreadAlphaBetaSearch)_x;
             tmp_board = x.board;
             min = x.min;
             max = x.max;
