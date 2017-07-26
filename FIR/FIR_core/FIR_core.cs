@@ -980,6 +980,7 @@ namespace FIR
         {
             int x, y;
             int i, j;
+            int n;
             int tmp;
             int[] result = new int[OUT_WIDTH + 1];
             int[,] imp_board;
@@ -987,7 +988,9 @@ namespace FIR
             StructSortBoard[] sort_imp_board;
             imp_board = GetAllImpWithBoard(board);
             sort_imp_board = SortBoardImp(imp_board);
-            for (i = 1; i <= OUT_WIDTH; i++)
+            tmp = sort_imp_board[1].num;
+            i = 1;
+            while (sort_imp_board[i].num == tmp)
             {
                 CopyArray(board, board1);
                 board2 = FIR_core_V2.ChangeBoard(board);
@@ -996,9 +999,11 @@ namespace FIR
                 x = GetAllShape(board1, sort_imp_board[i].X, sort_imp_board[i].Y);
                 y = GetAllShape(board2, sort_imp_board[i].X, sort_imp_board[i].Y);
                 result[i] = ScoreShape[x] - ScoreShape[y];
+                i++;
             }
-            for (i = 1; i <= OUT_WIDTH - 1; i++)
-                for (j = i + 1; j <= OUT_WIDTH; j++)
+            n = i - 1;
+            for (i = 1; i <= n - 1; i++)
+                for (j = i + 1; j <= n; j++)
                     if (result[i] > result[j])
                     {
                         tmp = result[i];
