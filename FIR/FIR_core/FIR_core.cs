@@ -979,23 +979,36 @@ namespace FIR
         public int ScoreOfBoardForComputer(int[,] board)
         {
             int x, y;
-            int result;
+            int i, j;
+            int tmp;
+            int[] result = new int[OUT_WIDTH + 1];
             int[,] imp_board;
             int[,] board1 = new int[SIZE + 1, SIZE + 1], board2 = new int[SIZE + 1, SIZE + 1];
             StructSortBoard[] sort_imp_board;
             imp_board = GetAllImpWithBoard(board);
             sort_imp_board = SortBoardImp(imp_board);
-            CopyArray(board, board1);
-            board2 = FIR_core_V2.ChangeBoard(board);
-            board1[sort_imp_board[1].X, sort_imp_board[1].Y] = 1;
-            board2[sort_imp_board[1].X, sort_imp_board[1].Y] = 1;
-            x = GetAllShape(board1, sort_imp_board[1].X, sort_imp_board[1].Y);
-            y = GetAllShape(board2, sort_imp_board[1].X, sort_imp_board[1].Y);
-            result = ScoreShape[x] - ScoreShape[y];
+            for (i = 1; i <= OUT_WIDTH; i++)
+            {
+                CopyArray(board, board1);
+                board2 = FIR_core_V2.ChangeBoard(board);
+                board1[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
+                board2[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
+                x = GetAllShape(board1, sort_imp_board[i].X, sort_imp_board[i].Y);
+                y = GetAllShape(board2, sort_imp_board[i].X, sort_imp_board[i].Y);
+                result[i] = ScoreShape[x] - ScoreShape[y];
+            }
+            for (i = 1; i <= OUT_WIDTH - 1; i++)
+                for (j = i + 1; j <= OUT_WIDTH; j++)
+                    if (result[i] > result[j])
+                    {
+                        tmp = result[i];
+                        result[i] = result[j];
+                        result[j] = tmp;
+                    }
             ////test
             //Console.WriteLine($"{sort_imp_board[1].X},{sort_imp_board[1].Y}          {result}");
             ////test
-            return result;
+            return result[1];
         }
         public int AlphaBetaSearch(int[,] board, int max, int min, int depth_count, int index_depth_max)
         {
@@ -1025,7 +1038,7 @@ namespace FIR
                     {
                         //特殊情况直接返回
                         if (GetImpX(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeDoubleLiveThree])
-                            { max = AlphaBetaMax; sort_imp_alpha_beta_search[index_depth_max].max_depth = depth_count; break; }
+                        { max = AlphaBetaMax; sort_imp_alpha_beta_search[index_depth_max].max_depth = depth_count; break; }
                         //if (GetImpY(board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { max = AlpahBetaMin; depth_max = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
@@ -1050,7 +1063,7 @@ namespace FIR
                         //特殊情况直接返回
                         //if (GetImpX(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeLiveFour]) { min = AlphaBetaMax; depth_max = depth_count; break; }
                         if (GetImpY(ttmp_board, sort_imp_board[i].X, sort_imp_board[i].Y) >= ScoreShape[ShapeDoubleLiveThree])
-                            { min = AlpahBetaMin; sort_imp_alpha_beta_search[index_depth_max].max_depth = depth_count; break; }
+                        { min = AlpahBetaMin; sort_imp_alpha_beta_search[index_depth_max].max_depth = depth_count; break; }
                         //特殊情况直接返回
                         CopyArray(board, tmp_board);
                         tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 2;
@@ -1078,7 +1091,7 @@ namespace FIR
             for (i = 1; i <= OUT_WIDTH; i++)
             {
                 CopyArray(board, tmp_board);
-                tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;                      
+                tmp_board[sort_imp_board[i].X, sort_imp_board[i].Y] = 1;
                 sort_imp_alpha_beta_search[i].X = sort_imp_board[i].X;
                 sort_imp_alpha_beta_search[i].Y = sort_imp_board[i].Y;
                 //封装
@@ -1101,7 +1114,7 @@ namespace FIR
             }
             for (i = 1; i <= NUM_THREAD; i++)
             {
-                while (MYTHREAD[i].IsAlive == true) ;                
+                while (MYTHREAD[i].IsAlive == true) ;
             }
             for (i = 1; i <= OUT_WIDTH; i++)
             {
@@ -1165,7 +1178,7 @@ namespace FIR
             max = x.max;
             depth_count = x.depth_count;
             index = x.index;
-            sort_imp_alpha_beta_search[index].imp=AlphaBetaSearch(tmp_board, max, min, depth_count, index);
+            sort_imp_alpha_beta_search[index].imp = AlphaBetaSearch(tmp_board, max, min, depth_count, index);
         }
     }
 
@@ -1179,7 +1192,7 @@ namespace FIR
 
         public FIR_user_V2(int out_width, int width, int depth, int num_thread) : base(out_width, width, depth, num_thread) {; }
         public int FindTarget()
-        {       
+        {
             int[,] tmp_board = new int[16, 16];
             //imp_board = GetAllImpWithBoard(board);
             //sort = SortBoardImp(imp_board);
