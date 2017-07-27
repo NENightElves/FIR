@@ -111,6 +111,12 @@
   <ItemGroup>
     <None Include="img\cross.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="img\circle_black_square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\circle_write_square.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

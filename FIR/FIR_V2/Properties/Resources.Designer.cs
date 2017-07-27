@@ -73,9 +73,29 @@ namespace FIR_V2.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap circle_black_square {
+            get {
+                object obj = ResourceManager.GetObject("circle_black_square", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap circle_write {
             get {
                 object obj = ResourceManager.GetObject("circle_write", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap circle_write_square {
+            get {
+                object obj = ResourceManager.GetObject("circle_write_square", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -31,9 +31,11 @@ namespace FIR
         int mode = 2;
         Image player_color = FIR_V2.Properties.Resources.circle_black;
         Image computer_color = FIR_V2.Properties.Resources.circle_write;
+        Image current_color = FIR_V2.Properties.Resources.circle_write_square;
         Image cross = FIR_V2.Properties.Resources.cross;
         Image tmp_color;
         int n;
+        int preX, preY;
         FIR_user_V2[] step_record = new FIR_user_V2[300];
         bool IsEnd;
 
@@ -114,7 +116,9 @@ namespace FIR
                 x = step_record[n].FindTarget();
                 y = x % 100;
                 x = x / 100;
-                btn[x, y].Image = computer_color;
+                btn[x, y].Image = current_color;
+                if (n > 1) btn[preX, preY].Image = computer_color;
+                preX = x; preY = y;
                 if (IsWin()) { IsEnd = true; return; }
                 n++;
                 copy_data();
@@ -184,8 +188,10 @@ namespace FIR
                 tmp_color = player_color;
                 player_color = computer_color;
                 computer_color = tmp_color;
+                current_color = FIR_V2.Properties.Resources.circle_black_square;
                 Random ran = new Random();
-                btn[8, 8].Image = computer_color;
+                btn[8, 8].Image = current_color;
+                preX = 8; preY = 8;
                 n++;
                 IsEnd = false;
                 copy_data();
@@ -196,6 +202,7 @@ namespace FIR
             {
                 player_color = FIR_V2.Properties.Resources.circle_black;
                 computer_color = FIR_V2.Properties.Resources.circle_write;
+                current_color = FIR_V2.Properties.Resources.circle_write_square;
                 n = 0;
                 for (i = 1; i <= 299; i++)
                 {
