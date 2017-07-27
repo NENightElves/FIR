@@ -64,7 +64,7 @@ namespace FIR
                 {
                     if (btn[i, j].Image == cross) step_record[n].board[i, j] = 0;
                     if (btn[i, j].Image == player_color) step_record[n].board[i, j] = 2;
-                    if (btn[i, j].Image == computer_color) step_record[n].board[i, j] = 1;
+                    if ((btn[i, j].Image == computer_color) || (btn[i, j].Image == current_color)) step_record[n].board[i, j] = 1;
                 }
         }
 
