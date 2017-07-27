@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -106,6 +107,7 @@ namespace FIR
         void btn_event(object sender, EventArgs e)
         {
             int x, y;
+            int i, j;
             if (n == 0) { IsEnd = false; button1.Text = "重开"; }
             if ((IsEnd == false) && ((sender as PictureBox).Image == cross))
             {
@@ -113,7 +115,14 @@ namespace FIR
                 (sender as PictureBox).Image = player_color;
                 if (IsWin()) { IsEnd = true; return; }
                 copy_data();
-                x = step_record[n].FindTarget();
+                Thread tmp_thread = new Thread(() => step_record[n].FindTarget());
+                tmp_thread.Start();
+                pictureBox1.Visible = true;
+                //for (i = 1; i <= BOARD_SIZE_X; i++)
+                //    for (j = 1; j <= BOARD_SIZE_Y; j++)
+                //        btn[i, j].Enabled = false;
+                while (tmp_thread.IsAlive == true) { Application.DoEvents(); }
+                x = step_record[n].result;
                 y = x % 100;
                 x = x / 100;
                 btn[x, y].Image = current_color;
@@ -122,6 +131,10 @@ namespace FIR
                 if (IsWin()) { IsEnd = true; return; }
                 n++;
                 copy_data();
+                //for (i = 1; i <= BOARD_SIZE_X; i++)
+                //    for (j = 1; j <= BOARD_SIZE_Y; j++)
+                //        btn[i, j].Enabled = true;
+                pictureBox1.Visible = false;
             }
             return;
         }
@@ -171,6 +184,9 @@ namespace FIR
                 btn[i, BOARD_SIZE_X + 1].Enabled = false;
                 btn[BOARD_SIZE_X + 1, i].Enabled = false;
             }
+            pictureBox1.Size = new Size(400, 400);
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Visible = false;
             this.Size = new Size(416, 490);
             button1.Location = new Point(5, 410);
             button2.Location = new Point(70, 410);

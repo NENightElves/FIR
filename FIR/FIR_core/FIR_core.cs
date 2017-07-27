@@ -1194,6 +1194,8 @@ namespace FIR
         public int[,] board = new int[16, 16];
         int[,] imp_board = new int[16, 16];
         StructSortBoard[] sort = new StructSortBoard[300];
+        int _result;
+        public int result { get { return _result; } }
 
         public FIR_user_V2(int out_width, int width, int depth, int num_thread) : base(out_width, width, depth, num_thread) {; }
         public int FindTarget()
@@ -1204,7 +1206,8 @@ namespace FIR
             //print_boardimp(imp_board);
             //Console.WriteLine(sort[1].X * 100 + sort[1].Y);
             CopyArray(board, tmp_board);
-            return CallAlphaBataSearch(tmp_board);
+            _result = CallAlphaBataSearch(tmp_board);
+            return _result;
         }
         void print_boardimp(int[,] boardimp)
         {
